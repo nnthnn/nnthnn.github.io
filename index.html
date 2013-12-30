@@ -1,0 +1,222 @@
+<!doctype html>
+<!---
+ ______        __   __
+|   _  \.---.-|  |_|  |--.---.-.-----.
+|.  |   |  _  |   _|     |  _  |     |
+|.  |   |___._|____|__|__|___._|__|__|
+|:  |   |
+|::.|   |
+`--- ---'
+
+ ___                __              _______                        __
+|   |  .-----.--.--|__.-----.______|   _   .----.-----.-----.-----|  |--.---.-.--.--.--.
+|.  |  |  -__|  |  |  |     |______|.  |___|   _|  -__|  -__|     |     |  _  |  |  |  |
+|.  |__|_____|\___/|__|__|__|      |.  |   |__| |_____|_____|__|__|__|__|___._|________|
+|:  1   |                          |:  1   |
+|::.. . |                          |::.. . |
+`-------'                          `-------'
+
+See /humans.txt for more details
+//-->
+<!--[if lt IE 7]> <html class='no-js ie6 oldie' lang='en'> <![endif]-->
+<!--[if IE 7]>    <html class='no-js ie7 oldie' lang='en'> <![endif]-->
+<!--[if IE 8]>    <html class='no-js ie8 oldie' lang='en'> <![endif]-->
+<!--[if gt IE 8]><!--> <html class='no-js' lang='en'> <!--<![endif]-->
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+  <title>Nathan Levin-Greenhaw</title>
+  <meta name='description' content=''>
+  <meta name='author' content='Nathan Levin-Greenhaw'>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <link rel='stylesheet' href='/css/1140/1140.css' type='text/css' media='screen' />
+  <link rel='stylesheet' href='/css/1140/ie.css' type='text/css' media='screen' />
+  <link rel='stylesheet' href='/css/style.css' media='screen' />
+  <script src='/js/vendor/modernizr-2.6.2.min.js'></script>
+</head>
+<body>
+
+<script type="text/x-handlebars" data-template-name="application">
+<div class='container'>
+  <div id='main' role='main'>
+    <header class='row twelvecol'>
+        <h1>Nathan Levin-Greenhaw</h1>
+    </header>
+    {{outlet}}
+    <footer class='row twelvecol'>
+      <img src='/images/johnny_automatic_reading_in_the_study.png' />
+      <p>Copyright 2011&ndash;2013 Nathan Levin-Greenhaw. <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/'>Creative Commons License</a>.</p>
+    </footer>
+  </div>
+</div>
+</script>
+<script type="text/x-handlebars" data-template-name="index">
+    <div class='row'>
+      <div class='ninecol'>
+        <p>I am an experienced <strong>Software Engineer</strong>, <strong>Web designer</strong>, and <strong>User Interface practitioner</strong> all rolled in to one. I enjoy clean design patterns, such as <a href='http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller'>Model View Controller</a>, and elegant solutions. I have experience with many languages and frameworks. I have expertise with the operating system, infrastructure, and application development both frontends and backends. I am a strong proponent of <em>tightly cohesive &amp; loosely coupled</em> solutions and agile development practices. I enjoy using and contributing to free and open source software projects.</p>
+      </div>
+      <div class='threecol last c'>
+        <img src='/images/johnny_automatic_books.png' />
+      </div>
+    </div>
+    <div class='row stuff'>
+      <div class='heading'>
+        <h3>Things I&rsquo;m into right now</h3>
+      </div>
+      <div class='fourcol'>
+        <h4>Frameworks</h4>
+        <ul class='unstyled'>
+        {{#each item in controller.frameworks}}
+          {{#if item.url}}
+          <li><a {{bindAttr href=item.url}}>{{item.name}}</a></li>
+          {{else}}
+          <li>{{item.name}}</li>
+          {{/if}}
+        {{/each}}
+        </ul>
+      </div>
+      <div class='fourcol'>
+        <h4>Software</h4>
+        <ul class='unstyled'>
+        {{#each item in controller.software}}
+          {{#if item.url}}
+          <li><a {{bindAttr href=item.url}}>{{item.name}}</a></li>
+          {{else}}
+          <li>{{item.name}}</li>
+          {{/if}}
+        {{/each}}
+        </ul>
+      </div>
+      <div class='fourcol last'>
+        <h4>Other</h4>
+        <ul class='unstyled'>
+        {{#each item in controller.other}}
+          {{#if item.url}}
+          <li><a {{bindAttr href=item.url}}>{{item.name}}</a></li>
+          {{else}}
+          <li>{{item.name}}</li>
+          {{/if}}
+        {{/each}}
+        </ul>
+      </div>
+    </div>
+  <div class='row twelvecol ar'>
+    {{#linkTo "list" class="next"}}See more stuff I like{{/linkTo}}
+  </div>
+    <div class='row online'>
+      <div class='heading'>
+        <h3>Contact me</h3>
+      </div>
+      <div class='sixcol'>
+        <ul class='unstyled'>
+          <li>Email: <a href='mailto:nathan@njlg.info'>nathan@njlg.info</a></li>
+          <li>Linkedin: <a href='http://www.linkedin.com/in/nathanlevingreenhaw'>Profile</a></li>
+          <li>Github: <a href='https://github.com/njlg'>njlg</a></li>
+        </ul>
+      </div>
+      <div class='sixcol last'>
+        <ul class='unstyled'>
+          <li>Twitter: <a href='http://www.twitter.com/njlg'>@njlg</a></li>
+          <li>Google+: <a href='https://plus.google.com/106992409496314466146/posts'>Profile</a></li>
+          <li><span class='dl'>(though, I don&rsquo;t really update these two often)</span></p></li>
+        </ul>
+      </div>
+    </div>
+</script>
+<script type="text/x-handlebars" data-template-name="list">
+    <div class='row stuff'>
+      <div class='heading'>
+        <h3>Things I&rsquo;m into right now</h3>
+      </div>
+      <div class='fourcol'>
+        <h4>Frameworks</h4>
+        <ul class='unstyled'>
+        {{#each item in controller.frameworks}}
+          {{#if item.url}}
+          <li><a {{bindAttr href=item.url}}>{{item.name}}</a></li>
+          {{else}}
+          <li>{{item.name}}</li>
+          {{/if}}
+        {{/each}}
+        </ul>
+      </div>
+      <div class='fourcol'>
+        <h4>Software</h4>
+        <ul class='unstyled'>
+        {{#each item in controller.software}}
+          {{#if item.url}}
+          <li><a {{bindAttr href=item.url}}>{{item.name}}</a></li>
+          {{else}}
+          <li>{{item.name}}</li>
+          {{/if}}
+        {{/each}}
+        </ul>
+      </div>
+      <div class='fourcol last'>
+        <h4>Other</h4>
+        <ul class='unstyled'>
+        {{#each item in controller.other}}
+          {{#if item.url}}
+          <li><a {{bindAttr href=item.url}}>{{item.name}}</a></li>
+          {{else}}
+          <li>{{item.name}}</li>
+          {{/if}}
+        {{/each}}
+        </ul>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='sixcol'>
+        {{#linkTo "index" class="back"}}Go Back{{/linkTo}}
+      </div>
+      <div class='sixcol last ar'>
+        {{#linkTo "table" class="next"}}See Table{{/linkTo}}
+      </div>
+    </div>
+</script>
+<script type="text/x-handlebars" data-template-name="table">
+  <div class='row stuff'>
+    <div class='heading'>
+      <h3>Things I&rsquo;m into right now</h3>
+    </div>
+  </div>
+  <div class='row'>
+    <table>
+      <thead>
+        <tr>
+          <th title="Sorting: coming soon">Name</th>
+          <th title="Sorting: coming soon">Category</th>
+          <th title="Sorting: coming soon">Link</th>
+          <th title="Sorting: coming soon" class='desc'>Added</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each item in controller}}
+          <tr>
+            <td>{{#if item.url}}<a {{bindAttr href=item.url}}>{{item.name}}</a>{{else}}{{item.name}}{{/if}}</td>
+            <td>{{item.typeTitle}}</td>
+            <td><a {{bindAttr href=item.url}}>{{item.url}}</a></td>
+            <td>{{item.ago}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  <div class='row'>
+    <div class='twocol'>
+      {{#linkTo "list" class="back"}}Go Back{{/linkTo}}
+    </div>
+  </div>
+</script>
+
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+<script>window.jQuery || document.write("<script src='/js/vendor/jquery-1.9.1.min.js'><\/script>")</script>
+<script defer src='/js/vendor/moment.min.js'></script>
+<script defer src='/js/vendor/handlebars.js'></script>
+<script defer src='/js/vendor/ember-1.0.0-rc.1.min.js'></script>
+<script defer src='/js/main.js'></script>
+<script>window._gaq=[['_setAccount','UA-6948369-1'],['_trackPageview'],['_trackPageLoadTime']];Modernizr.load({load:('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js'});</script>
+<!--[if lt IE 7 ]><script src='//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js'></script>
+  <script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})});</script><![endif]-->
+</body>
+</html>

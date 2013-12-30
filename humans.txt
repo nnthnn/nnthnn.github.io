@@ -1,0 +1,35 @@
+/* the humans responsible & colophon */
+/* humanstxt.org */
+
+ ______        __   __
+|   _  \.---.-|  |_|  |--.---.-.-----.
+|.  |   |  _  |   _|     |  _  |     |
+|.  |   |___._|____|__|__|___._|__|__|
+|:  |   |
+|::.|   |
+`--- ---'
+
+ ___                __              _______                        __
+|   |  .-----.--.--|__.-----.______|   _   .----.-----.-----.-----|  |--.---.-.--.--.--.
+|.  |  |  -__|  |  |  |     |______|.  |___|   _|  -__|  -__|     |     |  _  |  |  |  |
+|.  |__|_____|\___/|__|__|__|      |.  |   |__| |_____|_____|__|__|__|__|___._|________|
+|:  1   |                          |:  1   |
+|::.. . |                          |::.. . |
+`-------'                          `-------'
+
+/* TEAM */
+  Nathan Levin-Greenhaw
+  Site: njlg.info
+  Twitter: @njlg
+  Location: Portland, Oregon, USA
+
+/* THANKS */
+  Names (& URL):
+  HTML5 Boilerplate Team (html5boilerplate.com)
+  Mark Pilgrim (mirrored diveintohtml5.ep.io)
+  Open Clip Art Library (www.openclipart.org)
+
+/* SITE */
+  Standards: HTML5, CSS3
+  Components: Modernizr, jQuery
+  Software: HTML5 Boilerplate
