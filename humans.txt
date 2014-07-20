@@ -21,6 +21,7 @@
   Nathan Levin-Greenhaw
   Site: njlg.info
   Twitter: @njlg
+  Github: https://github.com/njlg
   Location: Portland, Oregon, USA
 
 /* THANKS */
