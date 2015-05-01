@@ -1,5 +1,35 @@
 [
   {
+    "name": "Consul",
+    "type": "Software",
+    "url": "http://consul.io/",
+    "date": "Fri May 01 2015 06:24:28 GMT-0700 (PDT)"
+  },
+  {
+    "name": "Redis",
+    "type": "Software",
+    "url": "http://redis.io/",
+    "date": "Fri May 01 2015 06:24:28 GMT-0700 (PDT)"
+  },
+  {
+    "name": "Fluent Conf 2015",
+    "type": "Conference",
+    "url": "http://fluentconf.com/",
+    "date": "Fri May 01 2015 06:24:28 GMT-0700 (PDT)"
+  },
+  {
+    "name": "Elixir",
+    "type": "Language",
+    "url": "http://elixir-lang.org/",
+    "date": "Mon Dec 01 2014 06:27:56 GMT-0800 (PST)"
+  },
+  {
+    "name": "Rust",
+    "type": "Language",
+    "url": "http://www.rust-lang.org/",
+    "date": "Mon Dec 01 2014 06:27:56 GMT-0800 (PST)"
+  },
+  {
     "name": "OSCON 2014",
     "type": "Conference",
     "url": "http://www.oscon.com/oscon2014",
