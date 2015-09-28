@@ -1,5 +1,17 @@
 [
   {
+    "name": "React",
+    "type": "Framework",
+    "url": "https://facebook.github.io/react/",
+    "date": "Mon Sep 28 2015 08:28:03 GMT-0700 (PDT)"
+  },
+  {
+    "name": "Clojure",
+    "type": "Language",
+    "url": "http://clojure.org/",
+    "date": "Mon Sep 28 2015 08:28:03 GMT-0700 (PDT)"
+  },
+  {
     "name": "Consul",
     "type": "Software",
     "url": "http://consul.io/",
