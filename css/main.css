@@ -84,12 +84,16 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  text-align: justify;
 }
-.stuff section li { }
-.stuff section li+li:before {
+.stuff section li {
+  /* flex: 1 1; */
+  margin-right: 30px;
+}
+/* .stuff section li+li:before {
   padding: 0 5px;
   content: '\02237';
-}
+} */
 
 
 
@@ -155,7 +159,7 @@ h1,h2,h3 {
 }
 .title {
   /*color: white;*/
-  font-size: 4em;
+  font-size: 3em;
   line-height: .8em;
   text-align: center;
   margin: .2em 0;
@@ -183,7 +187,7 @@ a:hover {
 }
 
 .container {
-  margin: 2em 0;
+  margin: 1em 0;
 }
 
 .container:first-child {
