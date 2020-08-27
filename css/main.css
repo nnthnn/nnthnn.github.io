@@ -199,9 +199,9 @@ a:hover {
 }
 
 .thick-line {
-  height: 2px;
-  border-top: 2px solid #888;
+  height: 10px;
 }
+
 .thick-line-bottom {
   height: 2px;
   border-bottom: 2px solid #888;
