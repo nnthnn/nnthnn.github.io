@@ -8,27 +8,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link href="https://fonts.googleapis.com/css?family=Asap:400,700|Freckle+Face|Fredericka+the+Great" rel="stylesheet">
-  <link rel="stylesheet" href="css/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
   <div class="container">
-    <header class="wrapper clearfix">
-      <h1 class="title">Nathan Levin-Greenhaw</h1>
+
+    <header>
+      <h1>Nathan Levin-Greenhaw</h1>
     </header>
-  </div>
 
-  <div class="container">
-    <div class="main wrapper clearfix">
-      <article>
-        <p>I am an experienced <strong>Software Engineer</strong> specializing in <strong>full stack</strong> development. I use clean design patterns and elegant solutions. I have experience with many languages and frameworks. I am a strong proponent of <em>tightly cohesive &amp; loosely coupled</em> solutions and agile development practices. I like using and contributing to free and open source software projects.</p>
-      </article>
+    <div class="content main">
+      <p>I am an experienced <strong>Software Engineer</strong> specializing in <strong>full stack</strong> development. I use clean design patterns and elegant solutions. I have experience with many languages and frameworks. I am a strong proponent of <em>tightly cohesive &amp; loosely coupled</em> solutions and agile development practices. I like using and contributing to free and open source software projects.</p>
     </div>
-  </div>
 
-  <div class="container">
-    <div class="current wrapper clearfix">
-      <div class="thick-line"></div>
+    <div class="content current">
+      <div class="line"></div>
       <article>
         <div>
           <h3>Location</h3>
@@ -36,15 +31,14 @@
         </div>
         <div>
           <h3>Currently</h3>
-          <p>Software Engineer at <a href="https://www.waybridge.com">Waybridge</a></p>
+          <p>Software Engineer at <a href="https://minehub.com">Minehub</a></p>
+          <p>(<em>formerly Waybridge</em>)</p>
         </div>
       </article>
-      <div class="thick-line-bottom"></div>
+      <div class="double-line"></div>
     </div>
-  </div>
 
-  <div class="container">
-    <div class="wrapper stuff clearfix">
+    <div class="content stuff">
       <h2>Stuff I Like</h2>
       <article>
         <section>
@@ -60,9 +54,9 @@
         <section>
           <h3>Text Editors</h3>
           <ul>
-            <li>Atom</li>
             <li>Sublime Text</li>
-            <li>VS Code</li>
+            <li>VSCode</li>
+            <li>IntelliJ</li>
           </ul>
         </section>
       </article>
@@ -70,10 +64,22 @@
         <section>
           <h3>Languages</h3>
           <ul>
+            <li>
+              <div class="tooltip">
+                Rust &ast;
+                <span class="tooltiptext">Still learning</span>
+              </div>
+            </li>
             <li>Go</li>
-            <li>Javascript</li>
+            <li>Javascript/Typescript</li>
             <li>Python</li>
             <li>Scala</li>
+            <li>
+              <div class="tooltip">
+                Raku &ast;
+                <span class="tooltiptext">I&rsquo;m using this instead of Perl</span>
+              </div>
+            </li>
           </ul>
         </section>
         <section>
@@ -88,37 +94,42 @@
         <section>
           <h3>Tools</h3>
           <ul>
-            <li><a href="https://github.com/BurntSushi/ripgrep">ripgrep</a></li>
-            <li><a href="http://ohmyz.sh/">ohmyzsh</a></li>
-            <li><a href="https://brew.sh/">home brew</a></li>
+            <li>
+              <a href="https://fishshell.com/">fish</a>
+            </li>
+            <li>
+              <a href="https://github.com/oh-my-fish/oh-my-fish">oh-my-fish</a>
+            </li>
+            <li>
+              <a href="https://github.com/BurntSushi/ripgrep">ripgrep</a>
+            </li>
+            <li>
+              <a href="https://warp.dev">warp</a>
+            </li>
+            <li>
+              <a href="https://iterm2.com">iTerm 2</a>
+            </li>
           </ul>
         </section>
       </article>
     </div>
-  </div>
 
-  <div class="container">
-    <div class="wrapper clearfix">
-      <div class="thick-line"></div>
+    <div class="content">
+      <div class="line"></div>
       <div class="contact">
         <h3>Contact</h3>
         <ul>
           <li><a href="mailto:nathan@njlg.info">Email</a></li>
-          <li>//</li>
           <li><a href="https://github.com/njlg">Github</a></li>
-          <li>//</li>
           <li><a href="https://linkedin.com/in/nathanlevingreenhaw">LinkedIn</a></li>
         </ul>
       </div>
-      <div class="thick-line-bottom"></div>
+      <div class="double-line"></div>
     </div>
-  </div>
 
-  <div class="container">
-    <footer class="wrapper">
-      Copyright 2011&ndash;2023 Nathan Levin-Greenhaw.
+    <footer>
+      Copyright 2011&ndash;2024 Nathan Levin-Greenhaw.
       <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons License</a>.
     </footer>
-  </div>
 </body>
 </html>

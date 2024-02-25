@@ -1,54 +1,120 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
+  font-family: 'Cormorant+Garamond', serif;
   font-size: 16px;
+  line-height: 1.4em;
 }
 
-h1.title {
-  font-size: 3em;
-  line-height: 1;
-}
-
-h1, h2, h3, p, ul {
+h1,h2,h3 {
+  font-family: 'Fredericka the Great', cursive;
+  font-weight: normal;
   margin: 0;
 }
-
-h2 {
-  margin-bottom: 5px;
+h1 {
+  font-size: 3em;
+  line-height: .8em;
+  text-align: center;
+  font-weight: normal;
 }
-
-a {
-  border: none;
+h2 {
+  margin-bottom: 0.5em;
+}
+h3 span {
+  text-align: center;
+}
+h3 span+span {
+  margin-left: 1em;
+}
+header {
+  margin-top: 1em;
+}
+p {
+  margin: 0;
+}
+ul {
+  margin: 0;
+}
+section+section {
+  margin-top: 1em;
 }
 
 .container {
+  margin: 0 2em;
+}
+.content {
   margin: 1em 0;
 }
 
-.main {
-  margin-bottom: 10px;
+.contact article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.main article p {
-  text-align: center;
-}
-.main article ul {
+.contact ul {
+  margin: 0;
+  padding: 0;
   list-style: none;
   display: flex;
   justify-content: center;
 }
-.main article ul li {
-  margin-right: 1em;
+.contact ul li+li {
+  margin-left: 1em;
 }
 
-h3 {
-  display: flex;
-}
-h3 span:nth-child(2) {
-  flex: 1;
-  text-align: center;
+@media (prefers-color-scheme: dark) {
+  html {
+    color: white;
+    background: black;
+  }
+  a {
+    color: white;
+  }
+  a:hover {
+    color: #2f81f7;
+  }
 }
 
-.education section + section {
-  margin-top: 10px;
+@media (prefers-color-scheme: light) {
+  html {
+    color: #222;
+  }
+  a {
+    color: black;
+  }
+  a:hover {
+    color: blue;
+  }
 }
-.employment ul {
-  margin-bottom: 10px;
+
+
+@media print {
+  *, *:before, *:after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  a, a:visited {
+    border: 0;
+    text-decoration: underline;
+  }
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+  a[href^="#"]:after, a[href^="javascript:"]:after {
+    content: "";
+  }
+  p, h2, h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  h2, h3 {
+    page-break-after: avoid;
+  }
 }

@@ -1,83 +1,92 @@
-/*! HTML5 Boilerplate v5.0 | MIT License | http://h5bp.com/ */
+:root {
+  --border-color: #888;
+}
+
+* {
+  box-sizing: border-box;
+}
 
 html {
-  color: #222;
   font-size: 1em;
   line-height: 1.4;
 }
-
-::-moz-selection {
-  background: #b3d4fc;
-  text-shadow: none;
-}
-
-::selection {
-  background: #b3d4fc;
-  text-shadow: none;
-}
-
-hr {
-  display: block;
-  height: 1px;
-  border: 0;
-  border-top: 1px solid #ccc;
-  margin: 1em 0;
-  padding: 0;
-}
-
-audio, canvas, iframe, img, svg, video {
-  vertical-align: middle;
-}
-
-fieldset {
-  border: 0;
-  margin: 0;
-  padding: 0;
-}
-
-textarea {
-  resize: vertical;
-}
-
-.browserupgrade {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
-}
-
-
-/* ===== Initializr Styles ==================================================
-   Author: Jonathan Verrecchia - verekia.com/initializr/responsive-template
-   ========================================================================== */
 
 body {
   font-family: 'Cormorant+Garamond', serif;
   font-size: 1.5em;
 }
 
-.wrapper {
-  width: 90%;
-  margin: 0 5%;
+h1,h2,h3 {
+  font-family: 'Fredericka the Great', cursive;
+  font-weight: normal;
+}
+h1 {
+  font-size: 3em;
+  line-height: .8em;
+  text-align: center;
+  margin: .2em 0;
+  font-weight: normal;
 }
 
-.stuff article {
-  display: flex;
-  justify-content: space-between;
+a {
+  text-decoration: none;
+  border-bottom: 1px dashed;
+  transition: ease-in all 100ms;
 }
+a:hover {
+  border-bottom: 1px solid;
+}
+
+.container {
+  width: 1027px;
+  margin: 0 auto;
+}
+header, .content, footer {
+  margin: 2em 0;
+}
+
+.main p:first-line {
+  font-size: 1.2em;
+}
+
+article {
+  display: flex;
+}
+article div, article section {
+  flex: 1;
+}
+
+.current article div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1em;
+}
+.current article div+div {
+  border-left: 1px solid var(--border-color);
+}
+.current h3, .current p {
+  margin: 0;
+}
+
+.line {
+  height: 1px;
+  border-top: 1px solid var(--border-color);
+}
+
+.double-line {
+  height: 5px;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 2px solid var(--border-color);
+}
+
 .stuff article + article {
   margin-top: 1em;
 }
-.stuff section {
-  flex: 1 0 0;
-  width: 50%;
-  position: relative;
+.stuff h3 {
+  margin-bottom: 0.5em;
 }
-.stuff section h3 {
-  display: inline-block;
-  margin: 0 20px 0 0;
-}
-.stuff section ul {
+.stuff ul {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -86,149 +95,12 @@ body {
   flex-wrap: wrap;
   text-align: justify;
 }
-.stuff section li {
-  /* flex: 1 1; */
+.stuff ul li {
   margin-right: 30px;
-}
-/* .stuff section li+li:before {
-  padding: 0 5px;
-  content: '\02237';
-} */
-
-
-
-/* ===================
-    ALL: Orange Theme
-   =================== */
-/*
-.container {
-  position: relative;
-}
-.color:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -1em;
-  width: 200vh;
-  height: 100%;
-  z-index: -1;
-}
-.color1:before {
-  background: rgba(36, 149, 244, .4);
-}
-.color2:before {
-  background: rgba(57, 169, 219, .4);
-}
-.color3:before {
-  background: rgba(64, 188, 216, .4);
-}
-.color4:before {
-  background: rgba(243, 146, 55, .4);
-}
-.color5:before {
-  background: rgba(214, 50, 48, .4);
-}
-.one:before {
-  transform: rotate(1deg);
-}
-.two:before {
-  transform: rotate(2deg);
-}
-.three:before {
-  transform: rotate(3deg);
-}
-.four:before {
-  transform: rotate(4deg);
-}
-.one-back:before {
-  transform: rotate(-1deg);
-}
-.two-back:before {
-  transform: rotate(-2deg);
-}
-.three-back:before {
-  transform: rotate(-3deg);
-}
-.four-back:before {
-  transform: rotate(-4deg);
-}
-*/
-h1,h2,h3 {
-  font-family: 'Fredericka the Great', cursive;
-  font-weight: normal;
-}
-.title {
-  /*color: white;*/
-  font-size: 3em;
-  line-height: .8em;
-  text-align: center;
-  margin: .2em 0;
-  font-weight: normal;
-}
-
-/* ==============
-    MOBILE: Main
-   ============== */
-a {
-  color: black;
-  text-decoration: none;
-  border-bottom: 1px dashed;
-  transition: ease-in all 2ms;
-}
-a:hover {
-  color: blue;
-  border-bottom: 1px solid;
-}
-
-@keyframes borderBob {
-    0% { padding-bottom: 0px; }
-   50% { padding-bottom: 5px; }
-  100% { padding-bottom: 0px; }
-}
-
-.container {
-  margin: 1em 0;
-}
-
-.container:first-child {
-  margin: 0;
-}
-
-.main p {
-  line-height: 1.7;
-}
-
-.thick-line {
-  height: 10px;
-}
-
-.thick-line-bottom {
-  height: 2px;
-  border-bottom: 2px solid #888;
-}
-
-.current p,
-.current h3 {
-  margin: 0;
-}
-.current article {
-  display: flex;
-  border-top: 1px solid #888;
-  border-bottom: 1px solid #888;
-}
-.current article div {
-  flex: 1;
-  padding: 1em;
-  text-align: center;
-}
-.current article div:first-child {
-  border-right: 1px solid #888;
 }
 
 .contact {
   text-align: center;
-  border-top: 1px solid #888;
-  border-bottom: 1px solid #888;
   padding: 1em 0;
 }
 .contact h3 {
@@ -245,6 +117,36 @@ a:hover {
   margin: 0 0 0 20px;
   padding: 0;
 }
+.contact ul li+li::before {
+  display: inline-block;
+  content: '//';
+  margin-right: 20px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: max-content;
+  /* max-width: 100%; */
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 6px;
+
+  top: -10px;
+  left: 110%;
+  position: absolute;
+  z-index: 1;
+
+  opacity: 0;
+  transition: opacity 400ms;
+}
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
 
 footer {
   text-align: center;
@@ -252,112 +154,66 @@ footer {
 }
 
 
-/* ===============
-    ALL: IE Fixes
-   =============== */
-
-.ie7 .title {
-  padding-top: 20px;
-}
-
-
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
-
-
-/* ==========================================================================
-   Media Queries
-   ========================================================================== */
-
-@media only screen and (min-width: 480px) {
-  /* ====================
-    INTERMEDIATE: Menu
-   ==================== */
-}
-
-@media only screen and (max-width: 768px) {
-  .stuff section ul {
-    display: block;
+@media only screen and (max-width: 1140px) {
+  .container {
+    width: 100%;
+    margin: 0;
+    padding: 0 2em;
   }
 }
 
-@media only screen and (min-width: 768px) {
-  /* ====================
-    WIDE: CSS3 Effects
-   ==================== */
-  /* ============
-    WIDE: Menu
-   ============ */
-  /* ============
-    WIDE: Main
-   ============ */
-}
-
-@media only screen and (min-width: 1140px) {
-  /* ===============
-    Maximal Width
-   =============== */
-  .wrapper {
-    width: 1027px;
-    /* 1140px - 10% for margins */
-    margin: 0 auto;
+@media only screen and (max-width: 680px) {
+  .current article {
+    flex-direction: column-reverse;
+  }
+  .current article div+div {
+    border: 0;
+  }
+  .current article div:first-child {
+    border-top: 1px solid var(--border-color);
+  }
+  .stuff article {
+    flex-direction: column;
   }
 }
 
-
-/* ==========================================================================
-   Helper classes
-   ========================================================================== */
-
-.hidden {
-  display: none !important;
-  visibility: hidden;
+@media (prefers-color-scheme: dark) {
+  html {
+    color: white;
+    background: black;
+  }
+  a {
+    color: white;
+  }
+  a:hover {
+    color: #2f81f7;
+  }
+  .tooltip .tooltiptext {
+    background-color: #333;
+  }
 }
 
-.visuallyhidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
+@media (prefers-color-scheme: light) {
+  html {
+    color: #222;
+  }
+  a {
+    color: black;
+  }
+  a:hover {
+    color: blue;
+  }
+  .tooltip .tooltiptext {
+    background-color: lightyellow;
+  }
 }
 
-.visuallyhidden.focusable:active, .visuallyhidden.focusable:focus {
-  clip: auto;
-  height: auto;
-  margin: 0;
-  overflow: visible;
-  position: static;
-  width: auto;
-}
-
-.invisible {
-  visibility: hidden;
-}
-
-.clearfix:before, .clearfix:after {
-  content: " ";
-  display: table;
-}
-
-.clearfix:after {
-  clear: both;
-}
-
-.clearfix {
-  *zoom: 1;
-}
-
-
-/* ==========================================================================
-   Print styles
-   ========================================================================== */
 
 @media print {
+  .container {
+    width: 100%;
+    margin: 0 2em;
+  }
   *, *:before, *:after {
     background: transparent !important;
     color: #000 !important;
@@ -365,6 +221,7 @@ footer {
     text-shadow: none !important;
   }
   a, a:visited {
+    border: 0;
     text-decoration: underline;
   }
   a[href]:after {
@@ -375,19 +232,6 @@ footer {
   }
   a[href^="#"]:after, a[href^="javascript:"]:after {
     content: "";
-  }
-  pre, blockquote {
-    border: 1px solid #999;
-    page-break-inside: avoid;
-  }
-  thead {
-    display: table-header-group;
-  }
-  tr, img {
-    page-break-inside: avoid;
-  }
-  img {
-    max-width: 100% !important;
   }
   p, h2, h3 {
     orphans: 3;
