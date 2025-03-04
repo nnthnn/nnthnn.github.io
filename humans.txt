@@ -3,7 +3,7 @@
 
 # TEAM
 
-    Nathan Levin-Greenhaw -- author
+    Nathan Greenhaw -- author
 
 # THANKS
 
