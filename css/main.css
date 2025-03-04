@@ -12,20 +12,25 @@ html {
 }
 
 body {
-  font-family: 'Cormorant+Garamond', serif;
+  font-family: '', serif;
   font-size: 1.5em;
 }
 
-h1,h2,h3 {
-  font-family: 'Fredericka the Great', cursive;
-  font-weight: normal;
-}
 h1 {
-  font-size: 3em;
-  line-height: .8em;
+  font-family: 'JMH Moreneta Divine', sans-serif;
+  font-size: 3.5em;
+  line-height: 1em;
   text-align: center;
-  margin: .2em 0;
-  font-weight: normal;
+}
+
+h2 {
+  font-size: 2em;
+  line-height: 1em;
+  letter-spacing: 1.1px;
+  margin: 0;
+}
+h3 {
+  letter-spacing: 1.1px;
 }
 
 a {
@@ -50,7 +55,10 @@ header, .content, footer {
 }
 
 article {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 25px;
+  row-gap: 25px;
 }
 article div, article section {
   flex: 1;
@@ -126,11 +134,11 @@ article div, article section {
 .tooltip {
   position: relative;
   display: inline-block;
+  cursor: default;
 }
 .tooltip .tooltiptext {
   visibility: hidden;
   width: max-content;
-  /* max-width: 100%; */
   text-align: center;
   padding: 5px 10px;
   border-radius: 6px;
@@ -179,32 +187,35 @@ footer {
 
 @media (prefers-color-scheme: dark) {
   html {
-    color: white;
-    background: black;
+    color: #ece5cf;
+    background: #222;
   }
   a {
-    color: white;
+    color: #ece5cf;
   }
   a:hover {
     color: #2f81f7;
   }
   .tooltip .tooltiptext {
-    background-color: #333;
+    color: #222;
+    background: #ece5cf;
   }
 }
 
 @media (prefers-color-scheme: light) {
   html {
     color: #222;
+    background: #ece5cf;
   }
   a {
-    color: black;
+    color: #222;
   }
   a:hover {
     color: blue;
   }
   .tooltip .tooltiptext {
-    background-color: lightyellow;
+    color: #ece5cf;
+    background-color: #222;
   }
 }
 
