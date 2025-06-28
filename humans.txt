@@ -3,13 +3,4 @@
 
 # TEAM
 
-    Nathan Greenhaw -- author
-
-# THANKS
-
-  .. to all the people!
-
-# TECHNOLOGY COLOPHON
-
-    HTML5, CSS3
-    Google Fonts
+Nathan Greenhaw -- author

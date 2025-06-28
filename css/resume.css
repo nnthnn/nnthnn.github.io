@@ -3,31 +3,38 @@
 }
 
 body {
-  font-family: 'Cormorant+Garamond', serif;
+  font-family: '', serif;
   font-size: 16px;
   line-height: 1.4em;
 }
 
-h1,h2,h3 {
-  font-family: 'Fredericka the Great', cursive;
+h1, h2, h3 {
   font-weight: normal;
   margin: 0;
 }
 h1 {
-  font-size: 3em;
-  line-height: .8em;
+  font-size: 5em;
+  line-height: 0.8em;
+  letter-spacing: 1.5px;
+  font-weight: 400;
   text-align: center;
-  font-weight: normal;
 }
 h2 {
   margin-bottom: 0.5em;
+  letter-spacing: 1.5px;
+}
+h3 {
+  letter-spacing: 1.1px;
 }
 h3 span {
   text-align: center;
 }
 h3 span+span {
   margin-left: 1em;
+  font-size: 0.7em;
+  opacity: 0.8;
 }
+
 header {
   margin-top: 1em;
 }
@@ -45,9 +52,11 @@ section+section {
   margin: 0 2em;
 }
 .content {
-  margin: 1em 0;
+  margin: 1em 0 2em 0;
 }
-
+.contact {
+  margin: 0 0 2em 0;
+}
 .contact article {
   display: flex;
   flex-direction: column;
@@ -66,11 +75,11 @@ section+section {
 
 @media (prefers-color-scheme: dark) {
   html {
-    color: white;
-    background: black;
+    color: #ece5cf;
+    background: #222;
   }
   a {
-    color: white;
+    color: #ece5cf;
   }
   a:hover {
     color: #2f81f7;
@@ -80,9 +89,10 @@ section+section {
 @media (prefers-color-scheme: light) {
   html {
     color: #222;
+    background: #ece5cf;
   }
   a {
-    color: black;
+    color: #222;
   }
   a:hover {
     color: blue;
