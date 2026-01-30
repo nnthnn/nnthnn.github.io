@@ -1,6 +1,21 @@
+#  _   _       _   _                  ____                     _
+# | \ | | __ _| |_| |__   __ _ _ __  / ___|_ __ ___  ___ _ __ | |__   __ ___      __
+# |  \| |/ _` | __| '_ \ / _` | '_ \| |  _| '__/ _ \/ _ \ '_ \| '_ \ / _` \ \ /\ / /
+# | |\  | (_| | |_| | | | (_| | | | | |_| | | |  __/  __/ | | | | | | (_| |\ V  V /
+# |_| \_|\__,_|\__|_| |_|\__,_|_| |_|\____|_|  \___|\___|_| |_|_| |_|\__,_| \_/\_/
+#
+
 # humanstxt.org/
 # The humans responsible & technology colophon
 
 # TEAM
 
 Nathan Greenhaw -- author
+Location: Portland, OR
+
+# SITE
+
+Last update: 2026-01-30
+Standards: HTML5, CSS3
+Components: Vanilla JavaScript
+Software: Zed, Claude Code
