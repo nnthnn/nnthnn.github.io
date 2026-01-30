@@ -1,11 +1,55 @@
+:root {
+  --terminal-green: #33ff33;
+  --terminal-dark: #0a0a0a;
+  --terminal-dim: #1a5c1a;
+}
+
 * {
   box-sizing: border-box;
 }
 
+html {
+  background: var(--terminal-dark);
+  color: var(--terminal-green);
+}
+
 body {
-  font-family: '', serif;
-  font-size: 16px;
-  line-height: 1.4em;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 14px;
+  line-height: 1.5em;
+  text-shadow: 0 0 3px rgba(51, 255, 51, 0.5);
+}
+
+/* CRT scanline effect */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  z-index: 1000;
+}
+
+/* CRT vignette */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.6) 100%);
+  z-index: 999;
 }
 
 h1, h2, h3 {
@@ -13,26 +57,39 @@ h1, h2, h3 {
   margin: 0;
 }
 h1 {
-  font-size: 5em;
-  line-height: 0.8em;
-  letter-spacing: 1.5px;
-  font-weight: 400;
+  font-size: 3em;
+  line-height: 1em;
+  letter-spacing: 4px;
+  text-transform: uppercase;
   text-align: center;
+  text-shadow: 0 0 10px var(--terminal-green), 0 0 20px rgba(51, 255, 51, 0.5);
 }
 h2 {
   margin-bottom: 0.5em;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--terminal-dim);
+  padding-bottom: 0.25em;
 }
 h3 {
-  letter-spacing: 1.1px;
+  letter-spacing: 1px;
 }
 h3 span {
   text-align: center;
 }
 h3 span+span {
   margin-left: 1em;
-  font-size: 0.7em;
-  opacity: 0.8;
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+
+a {
+  color: var(--terminal-green);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--terminal-green);
+}
+a:hover {
+  text-shadow: 0 0 10px var(--terminal-green);
 }
 
 header {
@@ -49,13 +106,15 @@ section+section {
 }
 
 .container {
-  margin: 0 2em;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2em;
 }
 .content {
-  margin: 1em 0 2em 0;
+  margin: 1.5em 0 2em 0;
 }
 .contact {
-  margin: 0 0 2em 0;
+  margin: 0.5em 0 1.5em 0;
 }
 .contact article {
   display: flex;
@@ -68,63 +127,77 @@ section+section {
   list-style: none;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
-.contact ul li+li {
-  margin-left: 1em;
+.contact ul li {
+  margin: 0 0.5em;
 }
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color: #ece5cf;
-    background: #222;
-  }
-  a {
-    color: #ece5cf;
-  }
-  a:hover {
-    color: #2f81f7;
-  }
+.contact ul li+li::before {
+  content: '| ';
+  opacity: 0.5;
 }
 
-@media (prefers-color-scheme: light) {
-  html {
-    color: #222;
-    background: #ece5cf;
-  }
-  a {
-    color: #222;
-  }
-  a:hover {
-    color: blue;
-  }
+.employment section {
+  padding: 0.5em 0;
+  border-bottom: 1px solid var(--terminal-dim);
+}
+.employment section:last-child {
+  border-bottom: none;
 }
 
-
+/* Print styles - clean black on white */
 @media print {
-  *, *:before, *:after {
-    background: transparent !important;
+  @page {
+    margin: 0.75in;
+  }
+
+  :root {
+    --terminal-green: #000;
+    --terminal-dark: #fff;
+    --terminal-dim: #ccc;
+  }
+
+  html {
+    background: #fff !important;
     color: #000 !important;
-    box-shadow: none !important;
+  }
+
+  body {
+    font-size: 11px;
     text-shadow: none !important;
   }
-  a, a:visited {
-    border: 0;
+
+  body::before,
+  body::after {
+    display: none !important;
+  }
+
+  h1 {
+    font-size: 2.5em;
+    text-shadow: none !important;
+  }
+
+  h2 {
+    border-bottom-color: #ccc;
+  }
+
+  a {
+    color: #000 !important;
+    border-bottom: none;
     text-decoration: underline;
   }
-  a[href]:after {
-    content: " (" attr(href) ")";
+
+  .container {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
   }
-  abbr[title]:after {
-    content: " (" attr(title) ")";
+
+  .contact ul li+li::before {
+    content: '· ';
   }
-  a[href^="#"]:after, a[href^="javascript:"]:after {
-    content: "";
-  }
-  p, h2, h3 {
-    orphans: 3;
-    widows: 3;
-  }
-  h2, h3 {
-    page-break-after: avoid;
+
+  .employment section {
+    border-bottom-color: #eee;
   }
 }
