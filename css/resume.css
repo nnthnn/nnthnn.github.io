@@ -141,11 +141,31 @@ section+section {
   opacity: 0.5;
 }
 
-.employment section {
+@media (max-width: 600px) {
+  .contact ul {
+    flex-direction: column;
+    align-items: center;
+  }
+  .contact ul li+li::before {
+    content: none;
+  }
+  h3 {
+    display: flex;
+    flex-direction: column;
+  }
+  h3 span+span {
+    margin-left: 0;
+    margin-top: 0.2em;
+  }
+}
+
+.employment section,
+.education section {
   padding: 0.5em 0;
   border-bottom: 1px solid var(--terminal-dim);
 }
-.employment section:last-child {
+.employment section:last-child,
+.education section:last-child {
   border-bottom: none;
 }
 
