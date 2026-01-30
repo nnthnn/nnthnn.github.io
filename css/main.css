@@ -330,6 +330,15 @@ footer {
   .stuff section {
     border-right: none !important;
   }
+  .contact ul {
+    flex-direction: column;
+  }
+  .contact ul li {
+    margin: 0.25em 0;
+  }
+  .contact ul li+li::before {
+    content: none;
+  }
   body::before {
     background: repeating-linear-gradient(
       0deg,
