@@ -3,6 +3,7 @@
   --terminal-dark: #0a0a0a;
   --terminal-dim: #1a5c1a;
   --border-color: var(--terminal-dim);
+  --border-color-faint: rgba(26, 92, 26, 0.4);
   --accent-color: var(--terminal-green);
 }
 
@@ -85,8 +86,10 @@ a {
   transition: ease-in all 100ms;
 }
 a:hover {
-  border-bottom: 1px solid;
-  text-shadow: 0 0 10px var(--terminal-green);
+  background: var(--terminal-green);
+  color: var(--terminal-dark);
+  border-bottom-color: transparent;
+  text-shadow: none;
 }
 
 .container {
@@ -125,13 +128,15 @@ article div, article section {
   flex: 1;
 }
 
+.current {
+  border-top: 1px solid var(--border-color-faint);
+  border-bottom: 1px solid var(--border-color-faint);
+}
 .current article div {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1em;
-}
-.current article div+div {
 }
 .current h3 {
   margin: 0 0 0.25em;
@@ -196,18 +201,6 @@ article div, article section {
   animation: flicker 5s infinite;
 }
 
-.line {
-  height: 1px;
-  border-top: 1px solid var(--border-color);
-  opacity: 0.4;
-}
-
-.double-line {
-  height: 1px;
-  border-top: 1px solid var(--border-color);
-  opacity: 0.4;
-}
-
 .stuff h2 {
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
   font-size: 1.4em;
@@ -251,10 +244,17 @@ article div, article section {
 
 .contact {
   text-align: center;
-  padding: 0.5em 0;
+  padding: 1em;
+  border-top: 1px solid var(--border-color-faint);
+  border-bottom: 1px solid var(--border-color-faint);
 }
 .contact h3 {
-  margin: 0 0 0.25em;
+  margin: 0 0 0.3em;
+  font-weight: normal;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.7;
 }
 .contact ul {
   list-style: none;
@@ -284,14 +284,14 @@ article div, article section {
   text-align: center;
   padding: 5px 10px;
   border-radius: 6px;
-
   top: -10px;
   left: 110%;
   position: absolute;
   z-index: 1;
-
   opacity: 0;
   transition: opacity 400ms;
+  color: var(--terminal-dark);
+  background: var(--terminal-green);
 }
 .tooltip:hover .tooltiptext {
   visibility: visible;
@@ -340,12 +340,6 @@ footer {
     );
   }
 }
-
-.tooltip .tooltiptext {
-  color: var(--terminal-dark);
-  background: var(--terminal-green);
-}
-
 
 @media print {
   .container {

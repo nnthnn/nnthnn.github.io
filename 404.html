@@ -1,75 +1,234 @@
 <!DOCTYPE html>
+<!--
+
+  _   _       _   _                  ____                     _
+ | \ | | __ _| |_| |__   __ _ _ __  / ___|_ __ ___  ___ _ __ | |__   __ ___      __
+ |  \| |/ _` | __| '_ \ / _` | '_ \| |  _| '__/ _ \/ _ \ '_ \| '_ \ / _` \ \ /\ / /
+ | |\  | (_| | |_| | | | (_| | | | | |_| | | |  __/  __/ | | | | | | (_| |\ V  V /
+ |_| \_|\__,_|\__|_| |_|\__,_|_| |_|\____|_|  \___|\___|_| |_|_| |_|\__,_| \_/\_/
+
+  Hey there, fellow code explorer! Thanks for peeking under the hood.
+  Feel free to look around - it's just HTML, CSS, and a bit of vanilla JS.
+
+  Want to chat? me@nathangreenhaw.org
+
+-->
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Page Not Found</title>
+    <title>404 | Nathan Greenhaw</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="preconnect" href="https://fonts.cdnfonts.com" />
-    <link
-      href="https://fonts.cdnfonts.com/css/jmh-moreneta-divine"
-      rel="stylesheet"
-    />
-    <link href="https://fonts.cdnfonts.com/css/fathers" rel="stylesheet" />
+    <meta name="description" content="404 - Page not found on Nathan Greenhaw's website." />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <style>
+      :root {
+        --terminal-green: #33ff33;
+        --terminal-dark: #0a0a0a;
+      }
+
       * {
-        line-height: 1.2;
+        box-sizing: border-box;
         margin: 0;
       }
 
       html {
-        display: table;
-        font-family: sans-serif;
         height: 100%;
-        text-align: center;
-        width: 100%;
+        background: var(--terminal-dark);
+        color: var(--terminal-green);
       }
 
       body {
-        display: table-cell;
-        vertical-align: middle;
-        margin: 2em auto;
-        font-family: "", serif;
+        font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2em;
+        text-shadow: 0 0 3px rgba(51, 255, 51, 0.5);
       }
 
-      h1 {
-        font-size: 4em;
-        font-family: "JMH Moreneta Divine", sans-serif;
+      /* CRT scanline effect */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.15),
+          rgba(0, 0, 0, 0.15) 1px,
+          transparent 1px,
+          transparent 2px
+        );
+        z-index: 1000;
+      }
+
+      /* CRT vignette */
+      body::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.6) 100%);
+        z-index: 999;
+      }
+
+      .error-code {
+        font-size: 6em;
         font-weight: normal;
+        text-shadow: 0 0 10px var(--terminal-green), 0 0 20px rgba(51, 255, 51, 0.5);
       }
 
-      p {
-        font-size: 1.5em;
-        margin: 2em auto;
+      .terminal-output {
+        margin: 2em 0;
+        text-align: left;
+        line-height: 1.8;
       }
 
-      @media only screen and (max-width: 700px) {
-        body {
-          padding: 0 2em;
-        }
+      .prompt {
+        opacity: 0.7;
       }
 
-      @media (prefers-color-scheme: light) {
-        html {
-          color: #222;
-          background: #ece5cf;
-        }
+      .blink {
+        animation: blink 1s step-end infinite;
       }
 
-      @media (prefers-color-scheme: dark) {
-        html {
-          color: #ece5cf;
-          background: #222;
-        }
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+
+      #input {
+        position: absolute;
+        left: -9999px;
+      }
+
+      .history-line {
+        opacity: 0.8;
+      }
+
+      .hint {
+        font-size: 0.8em;
+        opacity: 0.4;
+        margin-top: 0.5em;
+        transition: opacity 0.5s;
+      }
+
+      .hint.hidden {
+        opacity: 0;
+      }
+
+      a {
+        color: var(--terminal-green);
+        text-decoration: none;
+        border-bottom: 1px dashed var(--terminal-green);
+        transition: ease-in all 100ms;
+      }
+
+      a:hover {
+        background: var(--terminal-green);
+        color: var(--terminal-dark);
+        border-bottom-color: transparent;
+        text-shadow: none;
       }
     </style>
   </head>
   <body>
-    <h1>Page Not Found</h1>
-    <p>
-      Sorry, but the page you were trying to view does not exist.
-      <br />
-      You make living worthwhile.
-    </p>
+    <h1 class="error-code" id="scramble" data-text="404">404</h1>
+    <div class="terminal-output" id="terminal">
+      <p><span class="prompt">$</span> cat requested_page.html</p>
+      <p>cat: requested_page.html: No such file or directory</p>
+      <p class="terminal-input"><span class="prompt">$</span> <span id="input-display"></span><span class="blink">&#9608;</span></p>
+      <p class="hint" id="hint">try typing a command...</p>
+    </div>
+    <input type="text" id="input" autofocus autocomplete="off" spellcheck="false">
+    <p><a href="/">Return to home</a></p>
+    <script>
+      const scrambleEl = document.getElementById('scramble');
+      const finalText = scrambleEl.dataset.text;
+      const chars = '0123456789@#$%&*!?';
+
+      function runScramble() {
+        let iterations = 0;
+        const scrambleInterval = setInterval(() => {
+          scrambleEl.textContent = finalText
+            .split('')
+            .map((char, index) => {
+              if (index < iterations) return finalText[index];
+              return chars[Math.floor(Math.random() * chars.length)];
+            })
+            .join('');
+
+          iterations += 0.15;
+
+          if (iterations >= finalText.length) {
+            clearInterval(scrambleInterval);
+            scrambleEl.textContent = finalText;
+          }
+        }, 80);
+      }
+
+      runScramble();
+      setInterval(runScramble, 8000);
+
+      // Interactive terminal
+      const errors = [
+        (cmd) => `${cmd}: command not found`,
+        (cmd) => `bash: ${cmd}: No such file or directory`,
+        (cmd) => `${cmd}: Permission denied`,
+        (cmd) => `${cmd}: Operation not permitted`,
+        (cmd) => `-bash: ${cmd}: command not found`,
+        (cmd) => `zsh: command not found: ${cmd}`,
+        (cmd) => `${cmd}: unable to resolve host`,
+        (cmd) => `Segmentation fault (core dumped)`,
+        (cmd) => `${cmd}: connection refused`,
+        (cmd) => `Error: ENOENT: no such file or directory`,
+      ];
+
+      const input = document.getElementById('input');
+      const inputDisplay = document.getElementById('input-display');
+      const terminal = document.getElementById('terminal');
+      const inputLine = document.querySelector('.terminal-input');
+      const hint = document.getElementById('hint');
+
+      input.addEventListener('input', () => {
+        inputDisplay.textContent = input.value;
+        hint.classList.toggle('hidden', input.value.length > 0);
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const cmd = input.value.trim();
+          if (cmd) {
+            const cmdLine = document.createElement('p');
+            cmdLine.className = 'history-line';
+            const promptSpan = document.createElement('span');
+            promptSpan.className = 'prompt';
+            promptSpan.textContent = '$';
+            cmdLine.appendChild(promptSpan);
+            cmdLine.appendChild(document.createTextNode(' ' + cmd));
+            terminal.insertBefore(cmdLine, inputLine);
+
+            const errorLine = document.createElement('p');
+            const randomError = errors[Math.floor(Math.random() * errors.length)];
+            errorLine.textContent = randomError(cmd.split(' ')[0]);
+            terminal.insertBefore(errorLine, inputLine);
+          }
+          input.value = '';
+          inputDisplay.textContent = '';
+        }
+      });
+
+      // Keep focus on input (works for both click and touch)
+      document.addEventListener('click', () => input.focus());
+      terminal.addEventListener('touchstart', () => input.focus());
+    </script>
   </body>
 </html>
-<!-- IE needs 512+ bytes: http://blogs.msdn.com/b/ieinternals/archive/2010/08/19/http-error-pages-in-internet-explorer.aspx -->

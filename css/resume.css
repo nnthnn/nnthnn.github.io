@@ -87,9 +87,13 @@ a {
   color: var(--terminal-green);
   text-decoration: none;
   border-bottom: 1px dashed var(--terminal-green);
+  transition: ease-in all 100ms;
 }
 a:hover {
-  text-shadow: 0 0 10px var(--terminal-green);
+  background: var(--terminal-green);
+  color: var(--terminal-dark);
+  border-bottom-color: transparent;
+  text-shadow: none;
 }
 
 header {
