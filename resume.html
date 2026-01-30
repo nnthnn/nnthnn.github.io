@@ -155,5 +155,16 @@
         </article>
       </div>
     </div>
+    <script>
+      requestAnimationFrame(() => {
+        document.documentElement.classList.add('transitions-ready');
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Shift') document.documentElement.classList.add('amber');
+      });
+      document.addEventListener('keyup', (e) => {
+        if (e.key === 'Shift') document.documentElement.classList.remove('amber');
+      });
+    </script>
   </body>
 </html>

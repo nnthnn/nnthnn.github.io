@@ -7,6 +7,19 @@
   --accent-color: var(--terminal-green);
 }
 
+/* Amber terminal easter egg */
+html.transitions-ready {
+  transition: color 100ms, text-shadow 100ms;
+}
+html.transitions-ready *, html.transitions-ready *::before, html.transitions-ready *::after {
+  transition: color 100ms, text-shadow 100ms, border-color 100ms, box-shadow 100ms;
+}
+.amber {
+  --terminal-green: #ffb000;
+  --terminal-dim: #5c4a1a;
+  --border-color-faint: rgba(92, 74, 26, 0.4);
+}
+
 * {
   box-sizing: border-box;
 }

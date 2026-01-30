@@ -12,6 +12,8 @@
 
   Want to chat? me@nathangreenhaw.org
 
+  (Hold Shift while viewing the page)
+
 -->
 <html lang="en">
 <head>
@@ -193,14 +195,33 @@
   setTimeout(runScramble2, 500);
   setInterval(runScramble2, 25000);
 
-  // Uptime counter
-  const startTime = Date.now();
+  // Uptime counter (persists across visits)
+  const UPTIME_KEY = 'nathang_first_visit';
+  let startTime = localStorage.getItem(UPTIME_KEY);
+  if (!startTime) {
+    startTime = Date.now();
+    localStorage.setItem(UPTIME_KEY, startTime);
+  }
+  startTime = parseInt(startTime, 10);
   const uptimeEl = document.getElementById('uptime');
+
+  function formatUptime(seconds) {
+    const years = Math.floor(seconds / 31536000);
+    const days = Math.floor((seconds % 31536000) / 86400);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    let result = `${mins}m ${secs}s`;
+    if (hours > 0 || days > 0 || years > 0) result = `${hours}h ${result}`;
+    if (days > 0 || years > 0) result = `${days}d ${result}`;
+    if (years > 0) result = `${years}y ${result}`;
+    return result;
+  }
+
   function updateUptime() {
     const elapsed = Math.floor((Date.now() - startTime) / 1000);
-    const mins = Math.floor(elapsed / 60);
-    const secs = elapsed % 60;
-    uptimeEl.textContent = `uptime: ${mins}m ${secs}s`;
+    uptimeEl.textContent = `uptime: ${formatUptime(elapsed)}`;
   }
   updateUptime();
   setInterval(updateUptime, 1000);
@@ -248,6 +269,18 @@
   }
 
   type();
+</script>
+
+<script>
+  requestAnimationFrame(() => {
+    document.documentElement.classList.add('transitions-ready');
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Shift') document.documentElement.classList.add('amber');
+  });
+  document.addEventListener('keyup', (e) => {
+    if (e.key === 'Shift') document.documentElement.classList.remove('amber');
+  });
 </script>
 </body>
 </html>
