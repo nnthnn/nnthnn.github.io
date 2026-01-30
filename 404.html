@@ -12,6 +12,8 @@
 
   Want to chat? me@nathangreenhaw.org
 
+  (Hold Shift while viewing the page)
+
 -->
 <html lang="en">
   <head>
@@ -24,6 +26,12 @@
       :root {
         --terminal-green: #33ff33;
         --terminal-dark: #0a0a0a;
+      }
+      .amber {
+        --terminal-green: #ffb000;
+      }
+      html.transitions-ready, html.transitions-ready *, html.transitions-ready *::before, html.transitions-ready *::after {
+        transition: color 100ms, text-shadow 100ms, border-color 100ms, box-shadow 100ms;
       }
 
       * {
@@ -229,6 +237,17 @@
       // Keep focus on input (works for both click and touch)
       document.addEventListener('click', () => input.focus());
       terminal.addEventListener('touchstart', () => input.focus());
+
+      // Amber easter egg
+      requestAnimationFrame(() => {
+        document.documentElement.classList.add('transitions-ready');
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Shift') document.documentElement.classList.add('amber');
+      });
+      document.addEventListener('keyup', (e) => {
+        if (e.key === 'Shift') document.documentElement.classList.remove('amber');
+      });
     </script>
   </body>
 </html>
