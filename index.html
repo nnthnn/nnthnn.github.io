@@ -1,15 +1,25 @@
 <!doctype html>
-<html lang="">
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Nathan Greenhaw</title>
-  <meta name="description" content="Nathan Greenhaw">
+  <title>Nathan Greenhaw | Software Engineer</title>
+  <meta name="description" content="Software engineer with two decades of experience building APIs, interfaces, and developer tooling. Based in Portland, OR.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://nathang.me/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Nathan Greenhaw | Software Engineer">
+  <meta property="og:description" content="Software engineer with two decades of experience building APIs, interfaces, and developer tooling.">
+  <meta property="og:url" content="https://nathang.me/">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Nathan Greenhaw | Software Engineer">
+  <meta name="twitter:description" content="Software engineer with two decades of experience building APIs, interfaces, and developer tooling.">
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.cdnfonts.com">
-  <link href="https://fonts.cdnfonts.com/css/jmh-moreneta-divine" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/fathers" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <link rel="stylesheet" href="css/main.css">
 </head>
@@ -17,11 +27,12 @@
   <div class="container">
 
     <header>
-      <h1>Nathan Greenhaw</h1>
+      <h1 class="flicker" id="scramble" data-text="Nathan Greenhaw">Nathan Greenhaw</h1>
     </header>
 
     <div class="content main">
-      <p>I am an experienced <strong>Software Engineer</strong> specializing in <strong>full stack</strong> development. I use clean design patterns and elegant solutions. I have experience with many languages and frameworks. I am a strong proponent of <em>tightly cohesive &amp; loosely coupled</em> solutions and agile development practices. I like using and contributing to free and open source software projects.</p>
+      <p>&gt; Two decades of building software, mostly at the boundary between systems and people&mdash;APIs, interfaces, developer tooling. I believe good abstractions are worth fighting for and that most complexity is accidental. I still care about the details after all this time.</p>
+      <blockquote>// &ldquo;Simplicity is prerequisite for reliability.&rdquo; &mdash;Dijkstra</blockquote>
     </div>
 
     <div class="content current">
@@ -32,15 +43,16 @@
           <p>Portland, OR</p>
         </div>
         <div>
-          <h3>Currently</h3>
-          <p>Software Engineer at <a href="https://scope3.com/about">Scope3</a></p>
+          <h3>Status</h3>
+          <p><span id="typewriter"></span><span class="blink">&block;</span></p>
+          <p><a href="resume.html">View Resume</a></p>
         </div>
       </article>
       <div class="double-line"></div>
     </div>
 
     <div class="content stuff">
-      <h2>Stuff I Like</h2>
+      <h2 id="scramble2" data-text="Stuff I Like">Stuff I Like</h2>
       <article>
         <section>
           <h3>Frameworks</h3>
@@ -68,7 +80,8 @@
               </div>
             </li>
             <li>Go</li>
-            <li>Javascript/Typescript</li>
+            <li>JS</li>
+            <li>TS</li>
             <li>Python</li>
             <li>Scala</li>
             <li>
@@ -77,6 +90,13 @@
                 <span class="tooltiptext">I&rsquo;m using this instead of Perl</span>
               </div>
             </li>
+          </ul>
+        </section>
+        <section>
+          <h3>Force Multipliers</h3>
+          <ul>
+            <li><a href="https://conductor.build/" rel="noopener noreferrer">Conductor</a></li>
+            <li><a href="https://docs.anthropic.com/en/docs/build-with-claude/claude-code" rel="noopener noreferrer">Claude Code</a></li>
           </ul>
         </section>
         <section>
@@ -91,21 +111,13 @@
         <section>
           <h3>Tools</h3>
           <ul>
-            <li>
-              <a href="https://fishshell.com/">fish</a>
-            </li>
-            <li>
-              <a href="https://github.com/oh-my-fish/oh-my-fish">oh-my-fish</a>
-            </li>
-            <li>
-              <a href="https://github.com/BurntSushi/ripgrep">ripgrep</a>
-            </li>
-            <li>
-              <a href="https://ghostty.org/">Ghostty</a>
-            </li>
-            <li>
-              <a href="https://www.raycast.com/">Raycast</a>
-            </li>
+            <li><a href="https://fishshell.com/" rel="noopener noreferrer">fish</a></li>
+            <li><a href="https://github.com/oh-my-fish/oh-my-fish" rel="noopener noreferrer">oh-my-fish</a></li>
+            <li><a href="https://github.com/BurntSushi/ripgrep" rel="noopener noreferrer">ripgrep</a></li>
+            <li><a href="https://ghostty.org/" rel="noopener noreferrer">Ghostty</a></li>
+            <li><a href="https://www.raycast.com/" rel="noopener noreferrer">Raycast</a></li>
+            <li><a href="https://starship.rs/" rel="noopener noreferrer">starship</a></li>
+            <li><a href="https://zellij.dev/" rel="noopener noreferrer">zellij</a></li>
           </ul>
         </section>
       </article>
@@ -117,16 +129,131 @@
         <h3>Contact</h3>
         <ul>
           <li><a href="mailto:me@nathangreenhaw.org">Email</a></li>
-          <li><a href="https://github.com/n8gh">Github</a></li>
-          <li><a href="https://linkedin.com/in/nathangreenhaw">LinkedIn</a></li>
+          <li><a href="https://github.com/nnthnn" rel="noopener noreferrer">Github</a></li>
+          <li><a href="https://linkedin.com/in/nathangreenhaw" rel="noopener noreferrer">LinkedIn</a></li>
+          <li><a href="resume.html">Resume</a></li>
         </ul>
       </div>
       <div class="double-line"></div>
     </div>
 
     <footer>
-      Copyright 2011&ndash;2026 Nathan Greenhaw.
-      <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons License</a>.
+      <span id="uptime"></span> | Copyright 2011&ndash;2026 Nathan Greenhaw | <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="noopener noreferrer">CC BY-NC-SA</a>
     </footer>
+  </div>
+<script>
+  // Scramble effect for name
+  const scrambleEl = document.getElementById('scramble');
+  const finalText = scrambleEl.dataset.text;
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+
+  function runScramble() {
+    let iterations = 0;
+    const scrambleInterval = setInterval(() => {
+      scrambleEl.textContent = finalText
+        .split('')
+        .map((char, index) => {
+          if (char === ' ') return ' ';
+          if (index < iterations) return finalText[index];
+          return chars[Math.floor(Math.random() * chars.length)];
+        })
+        .join('');
+
+      iterations += 0.5;
+
+      if (iterations >= finalText.length) {
+        clearInterval(scrambleInterval);
+        scrambleEl.textContent = finalText;
+      }
+    }, 50);
+  }
+
+  runScramble();
+  setInterval(runScramble, 20000);
+
+  // Scramble effect for "Stuff I Like"
+  const scrambleEl2 = document.getElementById('scramble2');
+  const finalText2 = scrambleEl2.dataset.text;
+
+  function runScramble2() {
+    let iterations = 0;
+    const scrambleInterval = setInterval(() => {
+      scrambleEl2.textContent = finalText2
+        .split('')
+        .map((char, index) => {
+          if (char === ' ') return ' ';
+          if (index < iterations) return finalText2[index];
+          return chars[Math.floor(Math.random() * chars.length)];
+        })
+        .join('');
+
+      iterations += 0.5;
+
+      if (iterations >= finalText2.length) {
+        clearInterval(scrambleInterval);
+        scrambleEl2.textContent = finalText2;
+      }
+    }, 50);
+  }
+
+  setTimeout(runScramble2, 500);
+  setInterval(runScramble2, 25000);
+
+  // Uptime counter
+  const startTime = Date.now();
+  const uptimeEl = document.getElementById('uptime');
+  function updateUptime() {
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    const mins = Math.floor(elapsed / 60);
+    const secs = elapsed % 60;
+    uptimeEl.textContent = `uptime: ${mins}m ${secs}s`;
+  }
+  updateUptime();
+  setInterval(updateUptime, 1000);
+</script>
+
+<script>
+  const phrases = [
+    "Open to opportunities",
+    "Looking for what's next",
+    "Available",
+    "Ready for input",
+    "Seeking new challenges",
+    "Awaiting connection",
+    "Standing by",
+    "In transition"
+  ];
+  let phraseIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  const typewriter = document.getElementById('typewriter');
+
+  function type() {
+    const currentPhrase = phrases[phraseIndex];
+
+    if (isDeleting) {
+      typewriter.textContent = currentPhrase.substring(0, charIndex - 1);
+      charIndex--;
+    } else {
+      typewriter.textContent = currentPhrase.substring(0, charIndex + 1);
+      charIndex++;
+    }
+
+    let delay = isDeleting ? 50 : 100;
+
+    if (!isDeleting && charIndex === currentPhrase.length) {
+      delay = 2000;
+      isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      delay = 500;
+    }
+
+    setTimeout(type, delay);
+  }
+
+  type();
+</script>
 </body>
 </html>
