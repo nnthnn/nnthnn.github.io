@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VIZUALIZER 3000</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -429,6 +430,33 @@
   }
 
   #style-picker[hidden] { display: none; }
+  #style-picker::-webkit-scrollbar { display: none; }
+  #style-picker { scrollbar-width: none; }
+
+  #viz-wrap:fullscreen #style-picker,
+  #viz-wrap:-webkit-full-screen #style-picker {
+    align-items: center;
+  }
+
+  #picker-scrollbar {
+    position: absolute;
+    right: 6px;
+    top: 8px;
+    bottom: 8px;
+    width: 4px;
+    z-index: 25;
+    pointer-events: none;
+  }
+  #picker-thumb {
+    position: absolute;
+    width: 100%;
+    background: rgba(0,255,65,0.35);
+    border-radius: 2px;
+    pointer-events: auto;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  #picker-thumb:hover { background: rgba(0,255,65,0.65); }
 
   #picker-grid {
     display: grid;
@@ -493,6 +521,7 @@
       <div id="style-picker" hidden>
         <div id="picker-grid"></div>
       </div>
+      <div id="picker-scrollbar" hidden><div id="picker-thumb"></div></div>
       <div id="viz-controls">
         <div id="viz-overlay-modes">
           <button type="button" class="mode-btn" onclick="openPicker()">STYLE</button>
@@ -578,6 +607,7 @@ let smoothing = 0.8;
 let running = false;
 
 const vizRegistry = [];
+// biome-ignore lint/correctness/noUnusedVariables: called from HTML onclick and viz.js
 function registerViz(spec) {
   vizRegistry.push({ ...spec, state: {} });
 }
@@ -626,6 +656,7 @@ document.getElementById('smooth').addEventListener('input', e => {
   if (analyser) analyser.smoothingTimeConstant = smoothing;
 });
 
+// biome-ignore lint/correctness/noUnusedVariables: used in viz.js
 const NBAR = 80;
 
 function getFFT(n) {
@@ -636,13 +667,14 @@ function getFFT(n) {
   const logMax = Math.log10(20000);
   const nyquist = 22050;
   for (let i = 0; i < n; i++) {
-    const freq = Math.pow(10, logMin + (i / n) * (logMax - logMin));
+    const freq = 10 ** (logMin + (i / n) * (logMax - logMin));
     const b = Math.min(Math.floor((freq / nyquist) * bins), bins - 1);
     out[i] = Math.min(1, (dataArray[b] / 255) * sensitivity / 4);
   }
   return out;
 }
 
+// biome-ignore lint/correctness/noUnusedVariables: used in viz.js
 function getWave() {
   analyser.getByteTimeDomainData(timeArray);
   const out = new Float32Array(timeArray.length);
@@ -659,7 +691,7 @@ function buildPicker() {
   grid.innerHTML = '';
   vizRegistry.forEach(viz => {
     const card = document.createElement('div');
-    card.className = 'picker-card' + (viz.id === mode ? ' active' : '');
+    card.className = `picker-card${viz.id === mode ? ' active' : ''}`;
     card.dataset.mode = viz.id;
 
     const cvs = document.createElement('canvas');
@@ -691,13 +723,50 @@ function buildPicker() {
   });
 }
 
+const pickerScrollbar = document.getElementById('picker-scrollbar');
+const pickerThumb = document.getElementById('picker-thumb');
+let thumbDragging = false, thumbDragY0 = 0, thumbScrollY0 = 0;
+
+function syncScrollbar() {
+  const picker = document.getElementById('style-picker');
+  if (picker.hidden) return;
+  const ratio = picker.clientHeight / picker.scrollHeight;
+  if (ratio >= 1) { pickerScrollbar.hidden = true; return; }
+  pickerScrollbar.hidden = false;
+  const trackH = picker.clientHeight - 16;
+  const thumbH = Math.max(30, ratio * trackH);
+  const maxScroll = picker.scrollHeight - picker.clientHeight;
+  pickerThumb.style.height = `${thumbH}px`;
+  pickerThumb.style.top = `${8 + (maxScroll > 0 ? (picker.scrollTop / maxScroll) * (trackH - thumbH) : 0)}px`;
+}
+
+document.getElementById('style-picker').addEventListener('scroll', syncScrollbar);
+
+pickerThumb.addEventListener('mousedown', e => {
+  thumbDragging = true;
+  thumbDragY0 = e.clientY;
+  thumbScrollY0 = document.getElementById('style-picker').scrollTop;
+  e.preventDefault();
+});
+document.addEventListener('mousemove', e => {
+  if (!thumbDragging) return;
+  const picker = document.getElementById('style-picker');
+  const trackH = picker.clientHeight - 16;
+  const thumbH = pickerThumb.offsetHeight;
+  picker.scrollTop = thumbScrollY0 + (e.clientY - thumbDragY0) / (trackH - thumbH) * (picker.scrollHeight - picker.clientHeight);
+});
+document.addEventListener('mouseup', () => { thumbDragging = false; });
+
+// biome-ignore lint/correctness/noUnusedVariables: called from HTML onclick
 function openPicker() {
   buildPicker();
   document.getElementById('style-picker').removeAttribute('hidden');
+  requestAnimationFrame(syncScrollbar);
 }
 
 function closePicker() {
   document.getElementById('style-picker').setAttribute('hidden', '');
+  pickerScrollbar.hidden = true;
 }
 
 // close on backdrop click (outside the grid)
@@ -717,7 +786,7 @@ function updateMeters(fft) {
     const v = fft[Math.floor(i * fft.length / N_LEVEL)] || 0;
     const h = Math.min(100, v * 100);
     const hue = v > 0.8 ? 0 : v > 0.5 ? 30 : 120;
-    levelFills[i].style.height = h + '%';
+    levelFills[i].style.height = `${h}%`;
     levelFills[i].style.background = `hsl(${hue},100%,50%)`;
     levelFills[i].style.boxShadow = h > 20 ? `0 0 4px hsl(${hue},100%,50%)` : 'none';
   }
@@ -728,8 +797,8 @@ function updateMeters(fft) {
   for (let i = half; i < fft.length; i++) sumR += fft[i];
   const avgL = sumL / half;
   const avgR = sumR / half;
-  document.getElementById('vu-l').style.width = Math.min(100, avgL * 200) + '%';
-  document.getElementById('vu-r').style.width = Math.min(100, avgR * 200) + '%';
+  document.getElementById('vu-l').style.width = `${Math.min(100, avgL * 200)}%`;
+  document.getElementById('vu-r').style.width = `${Math.min(100, avgR * 200)}%`;
 }
 
 const vizWrap = document.getElementById('viz-wrap');
@@ -754,7 +823,7 @@ function loop() {
   frameCount++;
   const now = performance.now();
   if (now - lastFPS > 1000) {
-    document.getElementById('status-right').textContent = frameCount + ' FPS';
+    document.getElementById('status-right').textContent = `${frameCount} FPS`;
     frameCount = 0; lastFPS = now;
   }
 
