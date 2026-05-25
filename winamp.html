@@ -415,6 +415,62 @@
     pointer-events: none;
     z-index: 101;
   }
+
+  /* STYLE PICKER OVERLAY */
+  #style-picker {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    background: rgba(0,0,0,0.92);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: auto;
+  }
+
+  #style-picker[hidden] { display: none; }
+
+  #picker-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 120px);
+    gap: 10px;
+    padding: 16px;
+  }
+
+  .picker-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    border: 1px solid #1a3a1a;
+    padding: 6px;
+    transition: border-color 0.15s;
+    background: #050f05;
+  }
+
+  .picker-card:hover { border-color: var(--green); }
+
+  .picker-card.active {
+    border-color: var(--green);
+    box-shadow: 0 0 8px rgba(0,255,65,0.3);
+  }
+
+  .picker-card canvas {
+    width: 108px;
+    height: 70px;
+    display: block;
+  }
+
+  .picker-card-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(0,255,65,0.6);
+  }
+
+  .picker-card.active .picker-card-label { color: var(--green); }
 </style>
 </head>
 <body>
@@ -434,13 +490,12 @@
   <div id="main">
     <div id="viz-wrap">
       <canvas id="viz"></canvas>
+      <div id="style-picker" hidden>
+        <div id="picker-grid"></div>
+      </div>
       <div id="viz-controls">
         <div id="viz-overlay-modes">
-          <button type="button" class="mode-btn active" data-mode="bars">BARS</button>
-          <button type="button" class="mode-btn" data-mode="scope">SCOPE</button>
-          <button type="button" class="mode-btn" data-mode="fire">FIRE</button>
-          <button type="button" class="mode-btn" data-mode="milkdrop">MILK</button>
-          <button type="button" class="mode-btn" data-mode="rings">RINGS</button>
+          <button type="button" class="mode-btn" onclick="openPicker()">STYLE</button>
         </div>
         <button type="button" id="fullscreen-btn" title="Toggle fullscreen">⛶</button>
       </div>
@@ -458,11 +513,7 @@
       </div>
 
       <div id="mode-btns">
-        <button type="button" class="mode-btn active" data-mode="bars">BARS</button>
-        <button type="button" class="mode-btn" data-mode="scope">SCOPE</button>
-        <button type="button" class="mode-btn" data-mode="fire">FIRE</button>
-        <button type="button" class="mode-btn" data-mode="milkdrop">MILK</button>
-        <button type="button" class="mode-btn" data-mode="rings">RINGS</button>
+        <button type="button" class="mode-btn" onclick="openPicker()">STYLE</button>
       </div>
 
       <div class="info-right">
@@ -526,6 +577,23 @@ let sensitivity = 4;
 let smoothing = 0.8;
 let running = false;
 
+const vizRegistry = [];
+function registerViz(spec) {
+  vizRegistry.push({ ...spec, state: {} });
+}
+
+function setMode(m) {
+  mode = m;
+  const viz = vizRegistry.find(v => v.id === m);
+  if (viz) viz.state = {};
+  document.querySelectorAll('.mode-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.mode === m);
+  });
+  document.querySelectorAll('.picker-card').forEach(c => {
+    c.classList.toggle('active', c.dataset.mode === m);
+  });
+}
+
 document.getElementById('start-btn').addEventListener('click', async () => {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
@@ -546,17 +614,7 @@ document.getElementById('start-btn').addEventListener('click', async () => {
   }
 });
 
-function setMode(m) {
-  mode = m;
-  firePixels = null;
-  document.querySelectorAll('.mode-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.mode === m);
-  });
-}
 
-document.querySelectorAll('.mode-btn').forEach(btn => {
-  btn.addEventListener('click', () => setMode(btn.dataset.mode));
-});
 
 document.getElementById('sens').addEventListener('input', e => {
   sensitivity = parseFloat(e.target.value);
@@ -568,10 +626,7 @@ document.getElementById('smooth').addEventListener('input', e => {
   if (analyser) analyser.smoothingTimeConstant = smoothing;
 });
 
-// PEAKS
 const NBAR = 80;
-const peaks = new Float32Array(NBAR).fill(0);
-const peakVel = new Float32Array(NBAR).fill(0);
 
 function getFFT(n) {
   analyser.getByteFrequencyData(dataArray);
@@ -597,176 +652,63 @@ function getWave() {
   return out;
 }
 
-function drawBars() {
-  ctx.fillStyle = 'rgba(0,0,0,0.85)';
-  ctx.fillRect(0, 0, W, H);
+// ---- viz functions live in viz.js ----
 
-  // Grid lines
-  ctx.strokeStyle = 'rgba(0,255,65,0.05)';
-  ctx.lineWidth = 0.5;
-  for (let i = 1; i < 4; i++) {
-    ctx.beginPath(); ctx.moveTo(0, H/4*i); ctx.lineTo(W, H/4*i); ctx.stroke();
-  }
+function buildPicker() {
+  const grid = document.getElementById('picker-grid');
+  grid.innerHTML = '';
+  vizRegistry.forEach(viz => {
+    const card = document.createElement('div');
+    card.className = 'picker-card' + (viz.id === mode ? ' active' : '');
+    card.dataset.mode = viz.id;
 
-  const fft = getFFT(NBAR);
-  const bw = W / NBAR;
+    const cvs = document.createElement('canvas');
+    cvs.width = 108;
+    cvs.height = 70;
+    card.appendChild(cvs);
 
-  for (let i = 0; i < NBAR; i++) {
-    const v = Math.min(1, fft[i]);
-    const bh = v * H * 0.94;
-    const x = i * bw;
-    const hue = v > 0.8 ? 0 : v > 0.5 ? 30 : 120;
-    const sat = 100;
-    const lit = 50 + v * 15;
+    const lbl = document.createElement('div');
+    lbl.className = 'picker-card-label';
+    lbl.textContent = viz.label;
+    card.appendChild(lbl);
 
-    // Bar glow
-    const grad = ctx.createLinearGradient(0, H, 0, H - bh);
-    grad.addColorStop(0, `hsla(${hue},${sat}%,${lit}%,0.9)`);
-    grad.addColorStop(0.6, `hsla(${Math.max(0,hue-20)},${sat}%,${lit+10}%,0.7)`);
-    grad.addColorStop(1, `hsla(180,100%,70%,0.4)`);
-    ctx.fillStyle = grad;
-    ctx.fillRect(x + 1, H - bh, bw - 2, bh);
+    card.addEventListener('click', () => {
+      setMode(viz.id);
+      closePicker();
+    });
 
-    // Reflection
-    ctx.fillStyle = `hsla(${hue},${sat}%,${lit}%,0.08)`;
-    ctx.fillRect(x + 1, H, bw - 2, Math.min(bh * 0.3, 30));
+    grid.appendChild(card);
 
-    // Peak dot
-    if (v > peaks[i]) { peaks[i] = v; peakVel[i] = 0; }
-    else { peakVel[i] += 0.002; peaks[i] = Math.max(0, peaks[i] - peakVel[i]); }
-    const ph = peaks[i] * H * 0.94;
-    ctx.fillStyle = peaks[i] > 0.8 ? '#ff2d78' : peaks[i] > 0.5 ? '#ff6b00' : '#00ff41';
-    ctx.shadowColor = ctx.fillStyle;
-    ctx.shadowBlur = 4;
-    ctx.fillRect(x + 1, H - ph - 2, bw - 2, 2);
-    ctx.shadowBlur = 0;
-  }
-}
-
-function drawScope() {
-  ctx.fillStyle = 'rgba(0,0,0,0.12)';
-  ctx.fillRect(0, 0, W, H);
-
-  const wave = getWave();
-  const step = wave.length / W;
-
-  // Center line
-  ctx.strokeStyle = 'rgba(0,255,65,0.08)';
-  ctx.lineWidth = 0.5;
-  ctx.beginPath(); ctx.moveTo(0, H/2); ctx.lineTo(W, H/2); ctx.stroke();
-
-  // Glow pass
-  ctx.beginPath();
-  ctx.strokeStyle = 'rgba(0,255,65,0.15)';
-  ctx.lineWidth = 6;
-  for (let x = 0; x < W; x++) {
-    const i = Math.floor(x * step);
-    const y = H/2 + wave[i] * H * 0.44;
-    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  }
-  ctx.stroke();
-
-  // Main line
-  ctx.beginPath();
-  ctx.strokeStyle = '#00ff41';
-  ctx.lineWidth = 1.5;
-  ctx.shadowColor = '#00ff41';
-  ctx.shadowBlur = 8;
-  for (let x = 0; x < W; x++) {
-    const i = Math.floor(x * step);
-    const y = H/2 + wave[i] * H * 0.44;
-    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  }
-  ctx.stroke();
-  ctx.shadowBlur = 0;
-}
-
-let firePixels = null;
-function drawFire() {
-  if (!firePixels || firePixels.length !== W * (H+2)) {
-    firePixels = new Uint8Array(W * (H + 2));
-  }
-  const fft = getFFT(W);
-  for (let x = 0; x < W; x++) {
-    const v = fft[x];
-    firePixels[(H+1)*W + x] = Math.floor(v * 240 + 10);
-    firePixels[H*W + x] = Math.floor(v * 200);
-  }
-  for (let y = H - 1; y >= 0; y--) {
-    for (let x = 0; x < W; x++) {
-      const sum = firePixels[(y+1)*W + x] + firePixels[(y+1)*W + ((x-1+W)%W)] + firePixels[(y+1)*W + ((x+1)%W)] + (y+2 <= H ? firePixels[(y+2)*W+x] : 0);
-      firePixels[y*W + x] = sum < 4.06 ? 0 : Math.floor(sum / 4.06);
+    const ctx2 = cvs.getContext('2d');
+    const previewState = {};
+    let startTime = null;
+    function animCard(ts) {
+      if (!startTime) startTime = ts;
+      viz.preview(ctx2, cvs.width, cvs.height, (ts - startTime) / 1000, previewState);
+      if (!cvs.closest('#style-picker[hidden]')) requestAnimationFrame(animCard);
     }
-  }
-  const img = ctx.createImageData(W, H);
-  for (let i = 0; i < W * H; i++) {
-    const v = firePixels[i];
-    img.data[i*4]   = Math.min(255, v * 3);
-    img.data[i*4+1] = Math.max(0, Math.min(255, v * 2 - 180));
-    img.data[i*4+2] = Math.max(0, v - 220) * 8;
-    img.data[i*4+3] = v > 0 ? 255 : 0;
-  }
-  ctx.fillStyle = '#000';
-  ctx.fillRect(0, 0, W, H);
-  ctx.putImageData(img, 0, 0);
+    requestAnimationFrame(animCard);
+  });
 }
 
-let milkT = 0;
-function drawMilkdrop() {
-  ctx.fillStyle = 'rgba(0,0,0,0.1)';
-  ctx.fillRect(0, 0, W, H);
-  const fft = getFFT(32);
-  const bass = fft[0];
-  const mid = fft[8];
-  const high = fft[24];
-  const cx = W / 2, cy = H / 2;
-
-  const colors = ['#00ff41', '#00eeff', '#ff2d78', '#ff6b00'];
-  for (let ring = 0; ring < 4; ring++) {
-    const rad = (40 + ring * 55) * (0.7 + bass * 0.8 + mid * 0.2);
-    const n = 4 + ring * 2;
-    ctx.beginPath();
-    for (let i = 0; i <= n * 8; i++) {
-      const a = (i / (n * 8)) * Math.PI * 2;
-      const freq = ring < 2 ? bass : ring === 2 ? mid : high;
-      const warp = 1 + 0.35 * Math.sin(n * a + milkT * (0.8 + ring * 0.5)) * freq;
-      const r2 = rad * warp * (1 + 0.1 * Math.sin(milkT * 1.3 + ring));
-      ctx.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2);
-    }
-    ctx.closePath();
-    ctx.strokeStyle = colors[ring];
-    ctx.lineWidth = 1.2;
-    ctx.shadowColor = colors[ring];
-    ctx.shadowBlur = 6;
-    ctx.stroke();
-    ctx.shadowBlur = 0;
-  }
-  milkT += 0.03;
+function openPicker() {
+  buildPicker();
+  document.getElementById('style-picker').removeAttribute('hidden');
 }
 
-let ringsT = 0;
-function drawRings() {
-  ctx.fillStyle = 'rgba(0,0,0,0.2)';
-  ctx.fillRect(0, 0, W, H);
-  const fft = getFFT(64);
-  const cx = W/2, cy = H/2;
-  const maxR = Math.min(W, H) * 0.45;
-  const RINGS = 64;
-  for (let i = 0; i < RINGS; i++) {
-    const v = fft[Math.floor(i * fft.length / RINGS)];
-    const r = (i / RINGS) * maxR;
-    const hue = (i / RINGS) * 180 + ringsT * 20;
-    ctx.beginPath();
-    ctx.arc(cx, cy, r + v * 30, 0, Math.PI * 2);
-    ctx.strokeStyle = `hsla(${hue},100%,60%,${v * 0.8 + 0.05})`;
-    ctx.lineWidth = 0.5 + v * 2;
-    ctx.shadowColor = `hsl(${hue},100%,60%)`;
-    ctx.shadowBlur = v * 8;
-    ctx.stroke();
-    ctx.shadowBlur = 0;
-  }
-  ringsT += 0.01;
+function closePicker() {
+  document.getElementById('style-picker').setAttribute('hidden', '');
 }
+
+// close on backdrop click (outside the grid)
+document.getElementById('style-picker').addEventListener('click', e => {
+  if (e.target === document.getElementById('style-picker')) closePicker();
+});
+
+// close on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closePicker();
+});
 
 // VU & level meters
 function updateMeters(fft) {
@@ -821,14 +763,12 @@ function loop() {
   const fft = getFFT(N_LEVEL);
   updateMeters(fft);
 
-  if (mode === 'bars') drawBars();
-  else if (mode === 'scope') drawScope();
-  else if (mode === 'fire') drawFire();
-  else if (mode === 'milkdrop') drawMilkdrop();
-  else if (mode === 'rings') drawRings();
+  const viz = vizRegistry.find(v => v.id === mode);
+  if (viz) viz.draw(ctx, W, H, viz.state);
 
   requestAnimationFrame(loop);
 }
 </script>
+<script src="viz.js"></script>
 </body>
 </html>
