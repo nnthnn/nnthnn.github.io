@@ -115,6 +115,52 @@
     height: 100%;
   }
 
+  #viz-controls {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  #viz-overlay-modes {
+    display: none;
+    gap: 2px;
+  }
+
+  #viz-wrap:fullscreen #viz-controls,
+  #viz-wrap:-webkit-full-screen #viz-controls {
+    position: fixed;
+  }
+
+  #viz-wrap:fullscreen #viz-overlay-modes,
+  #viz-wrap:-webkit-full-screen #viz-overlay-modes {
+    display: flex;
+  }
+
+  #fullscreen-btn {
+    background: transparent;
+    border: 1px solid rgba(0,255,65,0.3);
+    color: rgba(0,255,65,0.5);
+    font-size: 14px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    line-height: 1;
+  }
+
+  #fullscreen-btn:hover {
+    border-color: var(--green);
+    color: var(--green);
+    box-shadow: 0 0 8px rgba(0,255,65,0.3);
+  }
+
   #overlay-text {
     position: absolute;
     inset: 0;
@@ -388,6 +434,16 @@
   <div id="main">
     <div id="viz-wrap">
       <canvas id="viz"></canvas>
+      <div id="viz-controls">
+        <div id="viz-overlay-modes">
+          <button type="button" class="mode-btn active" data-mode="bars">BARS</button>
+          <button type="button" class="mode-btn" data-mode="scope">SCOPE</button>
+          <button type="button" class="mode-btn" data-mode="fire">FIRE</button>
+          <button type="button" class="mode-btn" data-mode="milkdrop">MILK</button>
+          <button type="button" class="mode-btn" data-mode="rings">RINGS</button>
+        </div>
+        <button type="button" id="fullscreen-btn" title="Toggle fullscreen">⛶</button>
+      </div>
       <div id="overlay-text">
         <p>AUDIO INPUT REQUIRED</p>
         <button type="button" id="start-btn"><span>▶ ENABLE MIC</span></button>
@@ -490,13 +546,16 @@ document.getElementById('start-btn').addEventListener('click', async () => {
   }
 });
 
-document.querySelectorAll('.mode-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.mode-btn').forEach(b => { b.classList.remove('active'); });
-    btn.classList.add('active');
-    mode = btn.dataset.mode;
-    firePixels = null;
+function setMode(m) {
+  mode = m;
+  firePixels = null;
+  document.querySelectorAll('.mode-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.mode === m);
   });
+}
+
+document.querySelectorAll('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => setMode(btn.dataset.mode));
 });
 
 document.getElementById('sens').addEventListener('input', e => {
@@ -730,6 +789,22 @@ function updateMeters(fft) {
   document.getElementById('vu-l').style.width = Math.min(100, avgL * 200) + '%';
   document.getElementById('vu-r').style.width = Math.min(100, avgR * 200) + '%';
 }
+
+const vizWrap = document.getElementById('viz-wrap');
+const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+fullscreenBtn.addEventListener('click', () => {
+  if (!document.fullscreenElement) {
+    vizWrap.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+});
+
+document.addEventListener('fullscreenchange', () => {
+  fullscreenBtn.textContent = document.fullscreenElement ? '✕' : '⛶';
+  resize();
+});
 
 let frameCount = 0, lastFPS = performance.now();
 function loop() {
