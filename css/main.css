@@ -248,11 +248,39 @@ article div, article section {
   line-height: 1.6;
 }
 .stuff ul li {
-  display: inline;
+  display: inline-block;
+  white-space: nowrap;
 }
 .stuff ul li:not(:last-child)::after {
   content: " · ";
   opacity: 0.5;
+}
+/* Full-URL tooltip for links */
+.link-tooltip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+  max-width: min(90vw, 640px);
+  width: max-content;
+  padding: 0.35em 0.6em;
+  font-size: 0.7em;
+  line-height: 1.35;
+  color: var(--terminal-green);
+  background: var(--terminal-dark);
+  border: 1px solid var(--terminal-dim);
+  box-shadow: 0 0 14px var(--terminal-dim);
+  overflow-wrap: anywhere;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 80ms ease, transform 80ms ease, visibility 80ms;
+}
+.link-tooltip.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 .project-grid {
