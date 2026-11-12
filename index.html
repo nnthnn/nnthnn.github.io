@@ -23,6 +23,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="canonical" href="https://nathang.me/">
 
+  <!-- Only redirect the user-site root; project sites live at /<project>/. -->
+  <script>
+    if (location.hostname === 'nnthnn.github.io') {
+      location.replace('https://nathang.me/');
+    }
+  </script>
+
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Nathan Greenhaw | Software Engineer">
@@ -61,6 +68,57 @@
           <p><a href="https://getwhys.io" rel="noopener noreferrer">Working at GetWhys</a></p>
         </div>
       </article>
+    </div>
+
+    <div class="content projects">
+      <h2 id="scramble3" data-text="Projects">Projects</h2>
+      <ul class="project-grid">
+        <li>
+          <a class="project-card" href="https://getcorral.app/" rel="noopener noreferrer">
+            <img class="project-logo" src="assets/projects/corral.png" alt="" width="72" height="72" loading="lazy">
+            <span class="project-info">
+              <span class="project-name">corral</span>
+              <span class="project-desc">A desktop app for running a herd of coding agents, each in its own git worktree.</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="project-card" href="https://nnthnn.github.io/hypr-recall/" rel="noopener noreferrer">
+            <img class="project-logo" src="assets/projects/hypr-recall.png" alt="" width="72" height="72" loading="lazy">
+            <span class="project-info">
+              <span class="project-name">hypr-recall</span>
+              <span class="project-desc">Save and restore Hyprland window sessions&mdash;column order and width included.</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="project-card" href="https://nnthnn.github.io/hyprdie/" rel="noopener noreferrer">
+            <img class="project-logo" src="assets/projects/hyprdie.png" alt="" width="72" height="72" loading="lazy">
+            <span class="project-info">
+              <span class="project-name">hyprdie</span>
+              <span class="project-desc">A graceful shutdown screen for Hyprland. Asks nicely, then escalates.</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="project-card" href="https://nnthnn.github.io/hyprview/" rel="noopener noreferrer">
+            <img class="project-logo" src="assets/projects/hyprview.svg" alt="" width="72" height="72" loading="lazy">
+            <span class="project-info">
+              <span class="project-name">hyprview</span>
+              <span class="project-desc">A keyboard-driven workspace overview with live window thumbnails.</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="project-card" href="https://mightymud.app/" rel="noopener noreferrer">
+            <img class="project-logo" src="assets/projects/mightymud.png" alt="" width="72" height="72" loading="lazy">
+            <span class="project-info">
+              <span class="project-name">MightyMUD</span>
+              <span class="project-desc">A modern desktop client for classic text worlds.</span>
+            </span>
+          </a>
+        </li>
+      </ul>
     </div>
 
     <div class="content stuff">
@@ -138,62 +196,41 @@
     </footer>
   </div>
 <script>
-  // Scramble effect for name
-  const scrambleEl = document.getElementById('scramble');
-  const finalText = scrambleEl.dataset.text;
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+  // Scramble effect for section headings
+  const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
 
-  function runScramble() {
-    let iterations = 0;
-    const scrambleInterval = setInterval(() => {
-      scrambleEl.textContent = finalText
-        .split('')
-        .map((char, index) => {
-          if (char === ' ') return ' ';
-          if (index < iterations) return finalText[index];
-          return chars[Math.floor(Math.random() * chars.length)];
-        })
-        .join('');
+  function scrambleHeading(el, delay, replayEvery) {
+    if (!el) return;
+    const finalText = el.dataset.text;
 
-      iterations += 0.5;
+    function run() {
+      let iterations = 0;
+      const scrambleInterval = setInterval(() => {
+        el.textContent = finalText
+          .split('')
+          .map((char, index) => {
+            if (char === ' ') return ' ';
+            if (index < iterations) return finalText[index];
+            return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+          })
+          .join('');
 
-      if (iterations >= finalText.length) {
-        clearInterval(scrambleInterval);
-        scrambleEl.textContent = finalText;
-      }
-    }, 50);
+        iterations += 0.5;
+
+        if (iterations >= finalText.length) {
+          clearInterval(scrambleInterval);
+          el.textContent = finalText;
+        }
+      }, 50);
+    }
+
+    setTimeout(run, delay);
+    setInterval(run, replayEvery);
   }
 
-  runScramble();
-  setInterval(runScramble, 20000);
-
-  // Scramble effect for "Stuff I Like"
-  const scrambleEl2 = document.getElementById('scramble2');
-  const finalText2 = scrambleEl2.dataset.text;
-
-  function runScramble2() {
-    let iterations = 0;
-    const scrambleInterval = setInterval(() => {
-      scrambleEl2.textContent = finalText2
-        .split('')
-        .map((char, index) => {
-          if (char === ' ') return ' ';
-          if (index < iterations) return finalText2[index];
-          return chars[Math.floor(Math.random() * chars.length)];
-        })
-        .join('');
-
-      iterations += 0.5;
-
-      if (iterations >= finalText2.length) {
-        clearInterval(scrambleInterval);
-        scrambleEl2.textContent = finalText2;
-      }
-    }, 50);
-  }
-
-  setTimeout(runScramble2, 500);
-  setInterval(runScramble2, 25000);
+  scrambleHeading(document.getElementById('scramble'), 0, 20000);
+  scrambleHeading(document.getElementById('scramble2'), 500, 25000);
+  scrambleHeading(document.getElementById('scramble3'), 1000, 40000);
 
   // Uptime counter (persists across visits)
   const UPTIME_KEY = 'nathang_first_visit';
