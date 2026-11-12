@@ -127,55 +127,55 @@
         <section>
           <h3>Frameworks</h3>
           <ul>
-            <li>React</li>
-            <li>NextJS</li>
-            <li>Prisma</li>
+            <li><a href="https://react.dev/" rel="noopener noreferrer">React</a></li>
+            <li><a href="https://tauri.app/" rel="noopener noreferrer">Tauri</a></li>
+            <li><a href="https://tailwindcss.com/" rel="noopener noreferrer">Tailwind CSS</a></li>
           </ul>
         </section>
         <section>
           <h3>Text Editors</h3>
           <ul>
-            <li>Zed</li>
-            <li>Sublime Text</li>
-            <li>VSCode</li>
+            <li><a href="https://zed.dev/" rel="noopener noreferrer">Zed</a></li>
+            <li><a href="https://www.sublimetext.com/" rel="noopener noreferrer">Sublime Text</a></li>
+            <li><a href="https://helix-editor.com/" rel="noopener noreferrer">helix</a></li>
           </ul>
         </section>
         <section>
           <h3>Languages</h3>
           <ul>
-            <li>Go</li>
-            <li>JS</li>
-            <li>TS</li>
-            <li>Python</li>
-            <li>Scala</li>
+            <li><a href="https://www.rust-lang.org/" rel="noopener noreferrer">Rust</a></li>
+            <li><a href="https://www.typescriptlang.org/" rel="noopener noreferrer">TypeScript</a></li>
+            <li><a href="https://www.lua.org/" rel="noopener noreferrer">Lua</a></li>
           </ul>
         </section>
         <section>
-          <h3>Force Multipliers</h3>
+          <h3>Workflow</h3>
           <ul>
-            <li><a href="https://conductor.build/" rel="noopener noreferrer">Conductor</a></li>
+            <li><a href="https://getcorral.app/" rel="noopener noreferrer">Corral</a></li>
             <li><a href="https://docs.anthropic.com/en/docs/build-with-claude/claude-code" rel="noopener noreferrer">Claude Code</a></li>
+            <li><a href="https://opencode.ai/" rel="noopener noreferrer">OpenCode</a></li>
           </ul>
         </section>
         <section>
-          <h3>Databases</h3>
+          <h3>Data</h3>
           <ul>
-            <li>PostgreSQL</li>
-            <li>Redis</li>
-            <li>BigQuery</li>
-            <li>Clickhouse</li>
+            <li><a href="https://www.postgresql.org/" rel="noopener noreferrer">PostgreSQL</a></li>
+            <li><a href="https://sqlite.org/" rel="noopener noreferrer">SQLite</a></li>
+            <li><a href="https://redis.io/" rel="noopener noreferrer">Redis</a></li>
           </ul>
         </section>
         <section>
           <h3>Tools</h3>
           <ul>
+            <li><a href="https://hypr.land/" rel="noopener noreferrer">hyprland</a></li>
             <li><a href="https://fishshell.com/" rel="noopener noreferrer">fish</a></li>
-            <li><a href="https://github.com/oh-my-fish/oh-my-fish" rel="noopener noreferrer">oh-my-fish</a></li>
-            <li><a href="https://github.com/BurntSushi/ripgrep" rel="noopener noreferrer">ripgrep</a></li>
-            <li><a href="https://ghostty.org/" rel="noopener noreferrer">Ghostty</a></li>
-            <li><a href="https://www.raycast.com/" rel="noopener noreferrer">Raycast</a></li>
             <li><a href="https://starship.rs/" rel="noopener noreferrer">starship</a></li>
+            <li><a href="https://ghostty.org/" rel="noopener noreferrer">Ghostty</a></li>
             <li><a href="https://zellij.dev/" rel="noopener noreferrer">zellij</a></li>
+            <li><a href="https://github.com/BurntSushi/ripgrep" rel="noopener noreferrer">ripgrep</a></li>
+            <li><a href="https://github.com/sharkdp/bat" rel="noopener noreferrer">bat</a></li>
+            <li><a href="https://yazi-rs.github.io/" rel="noopener noreferrer">yazi</a></li>
+            <li><a href="https://github.com/junegunn/fzf" rel="noopener noreferrer">fzf</a></li>
           </ul>
         </section>
       </article>
@@ -275,6 +275,75 @@
   document.addEventListener('keyup', (e) => {
     if (e.key === 'Shift') document.documentElement.classList.remove('amber');
   });
+</script>
+
+<script>
+  // Show each link's resolved URL on hover or focus.
+  (() => {
+    const links = document.querySelectorAll('a[href]');
+    if (!links.length) return;
+
+    const tooltip = document.createElement('div');
+    tooltip.className = 'link-tooltip';
+    tooltip.setAttribute('role', 'tooltip');
+    tooltip.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(tooltip);
+
+    let activeLink = null;
+    let frame = 0;
+
+    function position() {
+      if (!activeLink) return;
+
+      const linkRect = activeLink.getBoundingClientRect();
+      const tipRect = tooltip.getBoundingClientRect();
+      const gap = 8;
+      const edge = 8;
+
+      let top = linkRect.top - tipRect.height - gap;
+      if (top < edge) top = linkRect.bottom + gap;
+      top = Math.max(edge, Math.min(top, window.innerHeight - tipRect.height - edge));
+
+      let left = linkRect.left + linkRect.width / 2 - tipRect.width / 2;
+      left = Math.max(edge, Math.min(left, window.innerWidth - tipRect.width - edge));
+
+      tooltip.style.left = `${Math.round(left)}px`;
+      tooltip.style.top = `${Math.round(top)}px`;
+    }
+
+    function show(link) {
+      activeLink = link;
+      tooltip.textContent = link.href;
+      position();
+      tooltip.setAttribute('aria-hidden', 'false');
+      tooltip.classList.add('visible');
+    }
+
+    function hide() {
+      activeLink = null;
+      tooltip.classList.remove('visible');
+      tooltip.setAttribute('aria-hidden', 'true');
+      cancelAnimationFrame(frame);
+    }
+
+    function reposition() {
+      if (!activeLink) return;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(position);
+    }
+
+    links.forEach((link) => {
+      link.addEventListener('pointerenter', (event) => {
+        if (event.pointerType !== 'touch') show(link);
+      });
+      link.addEventListener('pointerleave', hide);
+      link.addEventListener('focus', () => show(link));
+      link.addEventListener('blur', hide);
+    });
+
+    window.addEventListener('scroll', reposition, { passive: true });
+    window.addEventListener('resize', reposition);
+  })();
 </script>
 </body>
 </html>
